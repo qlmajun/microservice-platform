@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.warrior.central.common.filter.TenantFilter,\
+com.warrior.central.common.filter.TraceFilter

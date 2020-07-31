@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.warrior.central.auth2.common.config.SecurityPropertiesConfig,\
+com.warrior.central.auth2.common.store.AuthDbTokenStore,\
+com.warrior.central.auth2.common.store.AuthRedisTokenStore,\
+com.warrior.central.auth2.common.store.AuthJwtTokenStore,\
+com.warrior.central.auth2.common.store.ResJwtTokenStore

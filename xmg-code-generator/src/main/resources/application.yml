@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${xmg.datasource.ip}:3306/user-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: ${xmg.datasource.username}
+    password: ${xmg.datasource.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver

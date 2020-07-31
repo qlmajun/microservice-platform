@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.warrior.central.ribbon.RibbonAutoConfigure,\
+com.warrior.central.ribbon.FeignAutoConfigure,\
+com.warrior.central.ribbon.RestTemplateAutoConfigure,\
+com.warrior.central.ribbon.filter.LbIsolationFilter,\
+com.warrior.central.ribbon.LbIsolationAutoConfigure

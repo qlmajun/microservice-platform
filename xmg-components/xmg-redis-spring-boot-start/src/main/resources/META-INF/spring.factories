@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.warrior.central.redis.RedisAutoConfigure,\
+com.warrior.central.redis.lock.RedissonDistributedLock,\
+com.warrior.central.redis.template.RedisRepository
