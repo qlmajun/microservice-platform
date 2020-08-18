@@ -11,7 +11,7 @@
 
     <artifactId>xmg-common-core</artifactId>
     <description>公共通用组件</description>
-s    <name>xmg-common-core</name>
+    <name>xmg-common-core</name>
 
     <properties>
     </properties>
