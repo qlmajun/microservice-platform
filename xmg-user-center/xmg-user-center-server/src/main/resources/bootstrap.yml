@@ -13,11 +13,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.32.129:8848
+        server-addr: 192.168.122.128:8848
         metadata:
           version: xmg
       config:
-        server-addr: 192.168.32.129:8848
+        server-addr: 192.168.122.128:8848
         file-extension: yml
         prefix: ${spring.application.name}
         shared-configs:
