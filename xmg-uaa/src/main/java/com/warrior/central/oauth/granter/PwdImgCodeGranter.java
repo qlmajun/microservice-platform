@@ -33,7 +33,7 @@ public class PwdImgCodeGranter extends ResourceOwnerPasswordTokenGranter {
         String deviceId = parameters.get("deviceId");
         String validCode = parameters.get("validCode");
         //校验图形验证码
-        validateCodeService.validate(deviceId, validCode);
+        //validateCodeService.validate(deviceId, validCode);
         return super.getOAuth2Authentication(client, tokenRequest);
     }
 }

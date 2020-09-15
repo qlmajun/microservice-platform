@@ -1,0 +1,66 @@
+spring:
+  ##### redis配置
+  redis:
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+  ##### druid配置
+  #连接池配置(通常来说，只需要修改initialSize、minIdle、maxActive
+  datasource:
+    druid:
+      initial-size: 10
+      max-active: 500
+      min-idle: 10
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      #打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      filters: stat,wall
+  servlet:
+    multipart:
+      #单个数据大小
+      maxFileSize: 10MB
+      #是总数据大小
+      maxRequestSize: 100MB
+##### mybatis-plus配置
+#字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+mybatis-plus:
+  global-config:
+    db-config:
+      field-strategy: NOT_NULL
+      #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #开启sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+##### ribbon配置
+## 从注册中心刷新servelist的时间 默认30秒，单位ms
+ribbon:
+  ServerListRefreshInterval: 15000
+  ## 请求连接的超时时间 默认1秒，单位ms
+  ConnectTimeout: 30000
+  ## 请求处理的超时时间 默认1秒，单位ms
+  ReadTimeout: 30000
+  ## 切换实例的重试次数 默认1
+  MaxAutoRetriesNextServer: 0

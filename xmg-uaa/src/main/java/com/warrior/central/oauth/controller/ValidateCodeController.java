@@ -3,6 +3,7 @@ package com.warrior.central.oauth.controller;
 import com.warrior.central.common.constant.SecurityConstants;
 import com.warrior.central.oauth.service.IValidateCodeService;
 import com.wf.captcha.GifCaptcha;
+import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,12 @@ public class ValidateCodeController {
         // 设置请求头为输出图片类型
         CaptchaUtil.setHeader(response);
         // 三个参数分别为宽、高、位数
-        GifCaptcha gifCaptcha = new GifCaptcha(100, 35, 4);
+        SpecCaptcha specCaptcha = new SpecCaptcha(100, 35, 4);
         // 设置类型：字母数字混合
-        gifCaptcha.setCharType(Captcha.TYPE_DEFAULT);
+        specCaptcha.setCharType(Captcha.TYPE_DEFAULT);
         // 保存验证码
-        validateCodeService.saveImageCode(deviceId, gifCaptcha.text().toLowerCase());
+        validateCodeService.saveImageCode(deviceId, specCaptcha.text().toLowerCase());
         // 输出图片流
-        gifCaptcha.out(response.getOutputStream());
+        specCaptcha.out(response.getOutputStream());
     }
 }

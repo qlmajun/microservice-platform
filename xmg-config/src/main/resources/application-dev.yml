@@ -1,0 +1,14 @@
+xmg:
+  ##### 数据库配置
+  datasource:
+    ip: 192.168.122.128
+    port: 3306
+    username: root
+    password: root
+
+spring:
+  ##### redis配置
+  redis:
+    host: 192.168.122.128
+    port: 6379
+    password: warrior
