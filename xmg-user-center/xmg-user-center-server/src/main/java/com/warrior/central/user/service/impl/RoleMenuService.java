@@ -3,7 +3,7 @@ package com.warrior.central.user.service.impl;
 import com.warrior.central.common.model.SysMenu;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.user.mapper.RoleMenuMapper;
-import com.warrior.central.user.model.SysRoleMenu;
+import com.warrior.central.user.model.SysRoleMenuDO;
 import com.warrior.central.user.service.IRoleMenuService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.Set;
  * @date 2020/7/28
  */
 @Service
-public class RoleMenuService extends SuperServiceImpl<RoleMenuMapper, SysRoleMenu> implements IRoleMenuService {
+public class RoleMenuService extends SuperServiceImpl<RoleMenuMapper, SysRoleMenuDO> implements IRoleMenuService {
 
     @Resource
     private RoleMenuMapper roleMenuMapper;

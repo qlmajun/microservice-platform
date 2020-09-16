@@ -10,33 +10,72 @@ import java.util.Set;
 
 /**
  * 菜单封装对象
+ *
  * @author majun
  * @date 2020/6/27
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@TableName("sys_menu")
-public class SysMenu extends SuperEntity{
+public class SysMenu extends SuperEntity {
 
-    private static final long serialVersionUID = 749360940290141161L;
+  private static final long serialVersionUID = 749360940290141161L;
 
-    private Long parentId;
-    private String name;
-    private String css;
-    private String url;
-    private String path;
-    private Integer sort;
-    private Integer type;
-    private Boolean hidden;
-    /**
-     * 请求的类型
-     */
-    private String pathMethod;
+  /**
+   * 父Id
+   */
+  private Long parentId;
 
-    @TableField(exist = false)
-    private List<SysMenu> subMenus;
-    @TableField(exist = false)
-    private Long roleId;
-    @TableField(exist = false)
-    private Set<Long> menuIds;
+  /**
+   * 名称
+   */
+  private String name;
+
+  /**
+   * css样式
+   */
+  private String css;
+
+  /**
+   * 菜单url
+   */
+  private String url;
+
+  /**
+   * 菜单path
+   */
+  private String path;
+
+  /**
+   * 菜单排序
+   */
+  private Integer sort;
+
+  /**
+   * 菜单类型
+   */
+  private Integer type;
+
+  /**
+   * 是否隐藏
+   */
+  private Boolean hidden;
+
+  /**
+   * 请求的类型
+   */
+  private String pathMethod;
+
+  /**
+   * 子菜单
+   */
+  private List<SysMenu> subMenus;
+
+  /**
+   * 角色id
+   */
+  private Long roleId;
+
+  /**
+   * 菜单Id集合
+   */
+  private Set<Long> menuIds;
 }

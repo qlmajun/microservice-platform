@@ -5,11 +5,13 @@ import cn.hutool.core.convert.Convert;
 import com.warrior.central.common.annotation.LoginUser;
 import com.warrior.central.common.constant.CommonConstant;
 import com.warrior.central.common.model.*;
+import com.warrior.central.user.model.SysMenuDO;
 import com.warrior.central.user.service.IMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,12 +70,12 @@ public class MenuController {
         //获取该角色对应的菜单
         List<SysMenu> roleMenus = menuService.findByRoles(roleIds);
         //全部的菜单列表
-        List<SysMenu> allMenus = menuService.findAll();
+        List<SysMenuDO> allMenus = menuService.findAll();
         List<Map<String, Object>> authTrees = new ArrayList<>();
 
         Map<Long, SysMenu> roleMenusMap = roleMenus.stream().collect(Collectors.toMap(SysMenu::getId, SysMenu -> SysMenu));
 
-        for (SysMenu sysMenu : allMenus) {
+        for (SysMenuDO sysMenu : allMenus) {
             Map<String, Object> authTree = new HashMap<>();
             authTree.put("id", sysMenu.getId());
             authTree.put("name", sysMenu.getName());
@@ -101,7 +103,13 @@ public class MenuController {
     @ApiOperation(value = "查询所有菜单")
     @GetMapping("/findAlls")
     public PageResult<SysMenu> findAlls() {
-        List<SysMenu> list = menuService.findAll();
+        List<SysMenuDO> sysMenuDOS = menuService.findAll();
+        List<SysMenu> list = new ArrayList<>(sysMenuDOS.size());
+        sysMenuDOS.stream().forEach(sysMenuDO -> {
+            SysMenu sysMenu = new SysMenu();
+            BeanUtils.copyProperties(sysMenuDO,sysMenu);
+            list.add(sysMenu);
+        });
         return PageResult.<SysMenu>builder().data(list).code(0).count((long) list.size()).build();
     }
 
@@ -125,7 +133,13 @@ public class MenuController {
     @ApiOperation(value = "获取菜单以及顶级菜单")
     @GetMapping("/findOnes")
     public PageResult<SysMenu> findOnes() {
-        List<SysMenu> list = menuService.findOnes();
+        List<SysMenuDO> sysMenuDOS = menuService.findOnes();
+        List<SysMenu> list = new ArrayList<>(sysMenuDOS.size());
+        sysMenuDOS.stream().forEach(sysMenuDO -> {
+            SysMenu sysMenu = new SysMenu();
+            BeanUtils.copyProperties(sysMenuDO,sysMenu);
+            list.add(sysMenu);
+        });
         return PageResult.<SysMenu>builder().data(list).code(0).count((long) list.size()).build();
     }
 
@@ -139,7 +153,9 @@ public class MenuController {
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdate(@RequestBody SysMenu menu) {
         try {
-            menuService.saveOrUpdate(menu);
+            SysMenuDO sysMenu = new SysMenuDO();
+            BeanUtils.copyProperties(menu,sysMenu);
+            menuService.saveOrUpdate(sysMenu);
             return Result.succeed("操作成功");
         } catch (Exception ex) {
             log.error("memu-saveOrUpdate-error", ex);

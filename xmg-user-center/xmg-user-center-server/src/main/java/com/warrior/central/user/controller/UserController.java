@@ -5,6 +5,7 @@ import com.warrior.central.common.annotation.LoginUser;
 import com.warrior.central.common.constant.CommonConstant;
 import com.warrior.central.common.model.*;
 import com.warrior.central.common.utils.ExcelUtil;
+import com.warrior.central.user.model.SysUserDO;
 import com.warrior.central.user.model.SysUserExcel;
 import com.warrior.central.user.service.IUserService;
 import io.swagger.annotations.Api;
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
@@ -122,7 +124,10 @@ public class UserController {
     @GetMapping("/users/{id}")
     @ApiOperation(value = "根据用户Id查询用户")
     public SysUser findUserById(@PathVariable Long id) {
-        return userService.getById(id);
+        SysUserDO sysUserDO = userService.getById(id);
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(sysUserDO,sysUser);
+        return sysUser;
     }
 
     /**
@@ -216,9 +221,9 @@ public class UserController {
             List<SysUserExcel> list = ExcelUtil.importExcel(excl, 0, 1, SysUserExcel.class);
             rowNum = list.size();
             if (rowNum > 0) {
-                List<SysUser> users = new ArrayList<>(rowNum);
+                List<SysUserDO> users = new ArrayList<>(rowNum);
                 list.forEach(u -> {
-                    SysUser user = new SysUser();
+                    SysUserDO user = new SysUserDO();
                     BeanUtil.copyProperties(u, user);
                     user.setPassword(CommonConstant.DEF_USER_PASSWORD);
                     user.setType(UserType.BACKEND.name());

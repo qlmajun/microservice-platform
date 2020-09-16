@@ -2,7 +2,7 @@ package com.warrior.central.user.mapper;
 
 import com.warrior.central.common.model.SysRole;
 import com.warrior.central.db.mapper.SuperMapper;
-import com.warrior.central.user.model.SysRoleUser;
+import com.warrior.central.user.model.SysRoleUserDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface UserRoleMapper extends SuperMapper<SysRoleUser> {
+public interface UserRoleMapper extends SuperMapper<SysRoleUserDO> {
 
     /**
      * 根据用户id获取角色

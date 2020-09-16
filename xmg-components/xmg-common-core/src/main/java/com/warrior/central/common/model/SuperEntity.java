@@ -18,6 +18,9 @@ import java.util.Date;
 @Setter
 @Getter
 public class SuperEntity<T extends Model<?>> extends Model<T> {
+
+    private static final long serialVersionUID = 8300453206348690284L;
+
     /**
      * 主键ID
      */

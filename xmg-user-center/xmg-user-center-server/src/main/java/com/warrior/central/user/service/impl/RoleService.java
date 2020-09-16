@@ -10,8 +10,10 @@ import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.user.mapper.RoleMapper;
 import com.warrior.central.user.mapper.RoleMenuMapper;
 import com.warrior.central.user.mapper.UserRoleMapper;
+import com.warrior.central.user.model.SysRoleDO;
 import com.warrior.central.user.service.IRoleService;
 import org.apache.commons.collections4.MapUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +28,7 @@ import java.util.Map;
  * @date 2020/7/31
  */
 @Service
-public class RoleService extends SuperServiceImpl<RoleMapper, SysRole> implements IRoleService {
+public class RoleService extends SuperServiceImpl<RoleMapper, SysRoleDO> implements IRoleService {
 
     private final static String LOCK_KEY_ROLECODE = "rolecode:";
 
@@ -62,7 +64,9 @@ public class RoleService extends SuperServiceImpl<RoleMapper, SysRole> implement
         if (sysRole.getId() == null) {
             this.saveRole(sysRole);
         } else {
-            baseMapper.updateById(sysRole);
+            SysRoleDO sysRoleDO = new SysRoleDO();
+            BeanUtils.copyProperties(sysRole,sysRoleDO);
+            baseMapper.updateById(sysRoleDO);
         }
         return Result.succeed("操作成功");
     }
@@ -71,8 +75,10 @@ public class RoleService extends SuperServiceImpl<RoleMapper, SysRole> implement
     @Override
     public void saveRole(SysRole sysRole) throws Exception {
         String roleCode = sysRole.getCode();
-        super.saveIdempotency(sysRole, lock
-                , LOCK_KEY_ROLECODE + roleCode, new QueryWrapper<SysRole>().eq("code", roleCode), "角色code已存在");
+        SysRoleDO sysRoleDO = new SysRoleDO();
+        BeanUtils.copyProperties(sysRole,sysRoleDO);
+        super.saveIdempotency(sysRoleDO, lock
+                , LOCK_KEY_ROLECODE + roleCode, new QueryWrapper<SysRoleDO>().eq("code", roleCode), "角色code已存在");
     }
 
     @Transactional(rollbackFor = Exception.class)

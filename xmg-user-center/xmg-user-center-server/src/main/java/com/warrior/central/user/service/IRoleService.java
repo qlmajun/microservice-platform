@@ -5,13 +5,14 @@ import com.warrior.central.common.model.Result;
 import com.warrior.central.common.model.SysRole;
 import com.warrior.central.common.service.ISuperService;
 
+import com.warrior.central.user.model.SysRoleDO;
 import java.util.List;
 import java.util.Map;
 
 /***
  * 角色操作服务接口声明
  */
-public interface IRoleService extends ISuperService<SysRole> {
+public interface IRoleService extends ISuperService<SysRoleDO> {
 
     /**
      * 查询所有角色

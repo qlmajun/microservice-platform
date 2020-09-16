@@ -9,7 +9,8 @@ import com.warrior.central.common.model.*;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.user.mapper.RoleMenuMapper;
 import com.warrior.central.user.mapper.UserMapper;
-import com.warrior.central.user.model.SysRoleUser;
+import com.warrior.central.user.model.SysRoleUserDO;
+import com.warrior.central.user.model.SysUserDO;
 import com.warrior.central.user.model.SysUserExcel;
 import com.warrior.central.user.service.IUserRoleService;
 import com.warrior.central.user.service.IUserService;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class UserService extends SuperServiceImpl<UserMapper, SysUser> implements IUserService {
+public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> implements IUserService {
 
     private final static String LOCK_KEY_USERNAME = "username:";
 
@@ -74,19 +75,19 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUser> implement
 
     @Override
     public SysUser selectByUsername(String username) {
-        List<SysUser> users = baseMapper.selectList(new QueryWrapper<SysUser>().eq("username", username));
+        List<SysUserDO> users = baseMapper.selectList(new QueryWrapper<SysUserDO>().eq("username", username));
         return getUser(users);
     }
 
     @Override
     public SysUser selectByOpenId(String openId) {
-        List<SysUser> users = baseMapper.selectList(new QueryWrapper<SysUser>().eq("open_id", openId));
+        List<SysUserDO> users = baseMapper.selectList(new QueryWrapper<SysUserDO>().eq("open_id", openId));
         return getUser(users);
     }
 
     @Override
     public SysUser selectByMobile(String mobile) {
-        List<SysUser> users = baseMapper.selectList(new QueryWrapper<SysUser>().eq("mobile", mobile));
+        List<SysUserDO> users = baseMapper.selectList(new QueryWrapper<SysUserDO>().eq("mobile", mobile));
         return getUser(users);
     }
 
@@ -144,7 +145,7 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUser> implement
 
     @Override
     public Result updatePassword(Long id, String oldPassword, String newPassword) {
-        SysUser sysUser = baseMapper.selectById(id);
+        SysUserDO sysUser = baseMapper.selectById(id);
         if (StrUtil.isNotBlank(oldPassword)) {
             if (!passwordEncoder.matches(oldPassword, sysUser.getPassword())) {
                 return Result.failed("旧密码错误");
@@ -153,7 +154,7 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUser> implement
         if (StrUtil.isBlank(newPassword)) {
             newPassword = CommonConstant.DEF_USER_PASSWORD;
         }
-        SysUser user = new SysUser();
+        SysUserDO user = new SysUserDO();
         user.setId(id);
         user.setPassword(passwordEncoder.encode(newPassword));
         baseMapper.updateById(user);
@@ -176,16 +177,18 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUser> implement
             sysUser.setEnabled(Boolean.TRUE);
         }
         String username = sysUser.getUsername();
-        boolean result = super.saveOrUpdateIdempotency(sysUser, lock
-                , LOCK_KEY_USERNAME + username, new QueryWrapper<SysUser>().eq("username", username)
+        SysUserDO userDO = new SysUserDO();
+        BeanUtils.copyProperties(sysUser,userDO);
+        boolean result = super.saveOrUpdateIdempotency(userDO, lock
+                , LOCK_KEY_USERNAME + username, new QueryWrapper<SysUserDO>().eq("username", username)
                 , username + "已存在");
         //更新角色
         if (result && StrUtil.isNotEmpty(sysUser.getRoleId())) {
             userRoleService.deleteUserRole(sysUser.getId(), null);
             List roleIds = Arrays.asList(sysUser.getRoleId().split(","));
             if (!CollectionUtils.isEmpty(roleIds)) {
-                List<SysRoleUser> roleUsers = new ArrayList<>(roleIds.size());
-                roleIds.forEach(roleId -> roleUsers.add(new SysRoleUser(sysUser.getId(), Long.parseLong(roleId.toString()))));
+                List<SysRoleUserDO> roleUsers = new ArrayList<>(roleIds.size());
+                roleIds.forEach(roleId -> roleUsers.add(new SysRoleUserDO(userDO.getId(), Long.parseLong(roleId.toString()))));
                 userRoleService.saveBatch(roleUsers);
             }
         }
@@ -197,7 +200,7 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUser> implement
         Long id = MapUtils.getLong(params, "id");
         Boolean enabled = MapUtils.getBoolean(params, "enabled");
 
-        SysUser appUser = baseMapper.selectById(id);
+        SysUserDO appUser = baseMapper.selectById(id);
         if (appUser == null) {
             return Result.failed("用户不存在");
         }
@@ -223,10 +226,12 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUser> implement
         return sysUserExcels;
     }
 
-    private SysUser getUser(List<SysUser> users) {
+    private SysUser getUser(List<SysUserDO> users) {
         SysUser user = null;
         if (users != null && !users.isEmpty()) {
-            user = users.get(0);
+            SysUserDO sysUserDO = users.get(0);
+            user = new SysUser();
+            BeanUtils.copyProperties(sysUserDO,user);
         }
         return user;
     }

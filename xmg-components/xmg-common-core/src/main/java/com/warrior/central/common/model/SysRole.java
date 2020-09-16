@@ -6,14 +6,26 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 角色
+ *
  * @author xmg
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@TableName("sys_role")
 public class SysRole extends SuperEntity {
-    private static final long serialVersionUID = 4497149010220586111L;
-    private String code;
-    private String name;
-    private Long userId;
+
+  private static final long serialVersionUID = 4497149010220586111L;
+
+  /**
+   * 角色编码
+   */
+  private String code;
+
+  /**
+   * 角色名
+   */
+  private String name;
+
+  /**
+   * 用户Id
+   */
+  private Long userId;
 }

@@ -2,7 +2,7 @@ package com.warrior.central.user.service;
 
 import com.warrior.central.common.model.SysMenu;
 import com.warrior.central.common.service.ISuperService;
-import com.warrior.central.user.model.SysRoleMenu;
+import com.warrior.central.user.model.SysRoleMenuDO;
 
 import java.util.List;
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * 角色菜单操作服务接口声明
  */
-public interface IRoleMenuService extends ISuperService<SysRoleMenu> {
+public interface IRoleMenuService extends ISuperService<SysRoleMenuDO> {
 
     /**
      * 根据角色编码和类型获取菜单项

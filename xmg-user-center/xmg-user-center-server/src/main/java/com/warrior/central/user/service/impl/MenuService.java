@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.warrior.central.common.model.SysMenu;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.user.mapper.MenuMapper;
-import com.warrior.central.user.model.SysRoleMenu;
+import com.warrior.central.user.model.SysMenuDO;
+import com.warrior.central.user.model.SysRoleMenuDO;
 import com.warrior.central.user.service.IMenuService;
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import java.util.*;
  * @date 2020/7/28
  */
 @Service
-public class MenuService extends SuperServiceImpl<MenuMapper, SysMenu> implements IMenuService {
+public class MenuService extends SuperServiceImpl<MenuMapper, SysMenuDO> implements IMenuService {
 
     @Autowired
     private RoleMenuService roleMenuService;
@@ -70,9 +71,9 @@ public class MenuService extends SuperServiceImpl<MenuMapper, SysMenu> implement
      * 查询所有菜单
      */
     @Override
-    public List<SysMenu> findAll() {
+    public List<SysMenuDO> findAll() {
         return baseMapper.selectList(
-                new QueryWrapper<SysMenu>().orderByAsc("sort")
+                new QueryWrapper<SysMenuDO>().orderByAsc("sort")
         );
     }
 
@@ -81,8 +82,8 @@ public class MenuService extends SuperServiceImpl<MenuMapper, SysMenu> implement
     public void setMenuToRole(Long roleId, Set<Long> menuIds) {
         roleMenuService.delete(roleId, null);
         if (!CollectionUtils.isEmpty(menuIds)) {
-            List<SysRoleMenu> roleMenus = new ArrayList<>(menuIds.size());
-            menuIds.forEach(menuId -> roleMenus.add(new SysRoleMenu(roleId, menuId)));
+            List<SysRoleMenuDO> roleMenus = new ArrayList<>(menuIds.size());
+            menuIds.forEach(menuId -> roleMenus.add(new SysRoleMenuDO(roleId, menuId)));
             roleMenuService.saveBatch(roleMenus);
         }
     }
@@ -91,9 +92,9 @@ public class MenuService extends SuperServiceImpl<MenuMapper, SysMenu> implement
      * 查询所有一级菜单
      */
     @Override
-    public List<SysMenu> findOnes() {
+    public List<SysMenuDO> findOnes() {
         return baseMapper.selectList(
-                new QueryWrapper<SysMenu>()
+                new QueryWrapper<SysMenuDO>()
                         .eq("type", 1)
                         .orderByAsc("sort")
         );

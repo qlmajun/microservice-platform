@@ -2,7 +2,7 @@ package com.warrior.central.user.mapper;
 
 import com.warrior.central.common.model.SysMenu;
 import com.warrior.central.db.mapper.SuperMapper;
-import com.warrior.central.user.model.SysRoleMenu;
+import com.warrior.central.user.model.SysRoleMenuDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Mapper
-public interface RoleMenuMapper extends SuperMapper<SysRoleMenu> {
+public interface RoleMenuMapper extends SuperMapper<SysRoleMenuDO> {
 
     /**
      * 根据角色Ids和类型获取菜单信息

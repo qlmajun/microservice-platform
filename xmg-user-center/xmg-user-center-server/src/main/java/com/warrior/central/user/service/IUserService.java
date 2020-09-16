@@ -5,15 +5,15 @@ import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
 import com.warrior.central.common.model.SysUser;
 import com.warrior.central.common.service.ISuperService;
+import com.warrior.central.user.model.SysUserDO;
 import com.warrior.central.user.model.SysUserExcel;
-
 import java.util.List;
 import java.util.Map;
 
 /**
  * 用户操作服务接口声明
  */
-public interface IUserService extends ISuperService<SysUser> {
+public interface IUserService extends ISuperService<SysUserDO> {
 
     /**
      * 根据用户名获取用户登入信息

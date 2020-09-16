@@ -3,7 +3,7 @@ package com.warrior.central.user.service.impl;
 import com.warrior.central.common.model.SysRole;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.user.mapper.UserRoleMapper;
-import com.warrior.central.user.model.SysRoleUser;
+import com.warrior.central.user.model.SysRoleUserDO;
 import com.warrior.central.user.service.IUserRoleService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2020/7/27
  */
 @Service
-public class UserRoleService extends SuperServiceImpl<UserRoleMapper, SysRoleUser> implements IUserRoleService {
+public class UserRoleService extends SuperServiceImpl<UserRoleMapper, SysRoleUserDO> implements IUserRoleService {
 
     @Resource
     private UserRoleMapper userRoleMapper;

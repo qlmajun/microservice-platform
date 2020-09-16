@@ -2,14 +2,14 @@ package com.warrior.central.user.service;
 
 import com.warrior.central.common.model.SysRole;
 import com.warrior.central.common.service.ISuperService;
-import com.warrior.central.user.model.SysRoleUser;
+import com.warrior.central.user.model.SysRoleUserDO;
 
 import java.util.List;
 
 /**
  * 用户角色操作服务接口声明
  */
-public interface IUserRoleService extends ISuperService<SysRoleUser> {
+public interface IUserRoleService extends ISuperService<SysRoleUserDO> {
 
     /**
      * 根据用户id获取角色

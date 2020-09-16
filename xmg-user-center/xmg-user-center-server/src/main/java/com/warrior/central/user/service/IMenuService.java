@@ -3,13 +3,14 @@ package com.warrior.central.user.service;
 import com.warrior.central.common.model.SysMenu;
 import com.warrior.central.common.service.ISuperService;
 
+import com.warrior.central.user.model.SysMenuDO;
 import java.util.List;
 import java.util.Set;
 
 /**
  * 菜单操作服务接口声明
  */
-public interface IMenuService extends ISuperService<SysMenu> {
+public interface IMenuService extends ISuperService<SysMenuDO> {
 
     /**
      * 角色菜单列表
@@ -40,7 +41,7 @@ public interface IMenuService extends ISuperService<SysMenu> {
     /**
      * 查询所有菜单
      */
-    List<SysMenu> findAll();
+    List<SysMenuDO> findAll();
 
     /**
      * 角色分配菜单
@@ -52,5 +53,5 @@ public interface IMenuService extends ISuperService<SysMenu> {
     /**
      * 查询所有一级菜单
      */
-    List<SysMenu> findOnes();
+    List<SysMenuDO> findOnes();
 }
