@@ -42,11 +42,14 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
+                    <!-- 镜像名称 -->
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <!-- 镜像标签 -->
                     <imageTags>
                         <imageTag>${project.version}</imageTag>
                         <imageTag>latest</imageTag>
                     </imageTags>
+                    <!--强制覆盖 镜像-->
                     <forceTags>true</forceTags>
                     <baseImage>${docker.baseImage}</baseImage>
                     <volumes>${docker.volumes}</volumes>
@@ -54,6 +57,8 @@
                         <JAVA_OPTS>${docker.java.opts}</JAVA_OPTS>
                     </env>
                     <entryPoint>["sh","-c","java $JAVA_OPTS ${docker.java.security.egd}  -jar /${project.build.finalName}.jar"]</entryPoint>
+                    <!-- 指定dockerfile文件 -->
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

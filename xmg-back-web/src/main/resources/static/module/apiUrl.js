@@ -1,1 +1,1 @@
-var my_api_server_url = 'http://127.0.0.1:8000/';
+var my_api_server_url = 'http://49.234.216.18:8000/';
