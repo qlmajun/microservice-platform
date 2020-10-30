@@ -349,6 +349,7 @@
         <module>xmg-config</module>
         <module>xmg-gateway</module>
         <module>xmg-back-web</module>
+        <module>xmg-home-stay</module>
     </modules>
 
 </project>
