@@ -20,10 +20,10 @@ public class SysRoleMenuDO extends Model<SysRoleMenuDO> {
   /**
    * 角色Id
    */
-  private Long roleId;
+  private String roleId;
 
   /**
    * 菜单Id
    */
-  private Long menuId;
+  private String menuId;
 }

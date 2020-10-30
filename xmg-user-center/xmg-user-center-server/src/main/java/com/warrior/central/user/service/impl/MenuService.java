@@ -63,7 +63,7 @@ public class MenuService extends SuperServiceImpl<MenuMapper, SysMenuDO> impleme
      * @return
      */
     @Override
-    public List<SysMenu> findByRoles(Set<Long> roleIds) {
+    public List<SysMenu> findByRoles(Set<String> roleIds) {
         return roleMenuService.findMenusByRoleIds(roleIds, null);
     }
 
@@ -79,7 +79,7 @@ public class MenuService extends SuperServiceImpl<MenuMapper, SysMenuDO> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void setMenuToRole(Long roleId, Set<Long> menuIds) {
+    public void setMenuToRole(String roleId, Set<String> menuIds) {
         roleMenuService.delete(roleId, null);
         if (!CollectionUtils.isEmpty(menuIds)) {
             List<SysRoleMenuDO> roleMenus = new ArrayList<>(menuIds.size());

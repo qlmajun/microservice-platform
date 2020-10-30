@@ -68,7 +68,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
             user = userServiceApi.selectByUsername(username);
         } else {
             user = new SysUser();
-            user.setId(Long.valueOf(userId));
+            user.setId(userId);
             user.setUsername(username);
         }
         List<SysRole> sysRoleList = new ArrayList<>();

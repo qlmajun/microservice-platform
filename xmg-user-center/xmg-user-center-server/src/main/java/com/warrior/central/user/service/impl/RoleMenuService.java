@@ -28,12 +28,12 @@ public class RoleMenuService extends SuperServiceImpl<RoleMenuMapper, SysRoleMen
     }
 
     @Override
-    public List<SysMenu> findMenusByRoleIds(Set<Long> roleIds, Integer type) {
+    public List<SysMenu> findMenusByRoleIds(Set<String> roleIds, Integer type) {
         return roleMenuMapper.findMenusByRoleIds(roleIds, type);
     }
 
     @Override
-    public int delete(Long roleId, Long menuId) {
+    public int delete(String roleId, String menuId) {
         return roleMenuMapper.delete(roleId, menuId);
     }
 }

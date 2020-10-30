@@ -20,10 +20,10 @@ public class SysRoleUserDO extends Model<SysRoleUserDO> {
   /**
    * 用户Id
    */
-  private Long userId;
+  private String userId;
 
   /**
    * 角色Id
    */
-  private Long roleId;
+  private String roleId;
 }

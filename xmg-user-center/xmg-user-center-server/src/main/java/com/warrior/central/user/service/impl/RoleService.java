@@ -83,7 +83,7 @@ public class RoleService extends SuperServiceImpl<RoleMapper, SysRoleDO> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void deleteRole(Long id) {
+    public void deleteRole(String id) {
         baseMapper.deleteById(id);
         roleMenuMapper.delete(id, null);
         userRoleMapper.deleteUserRole(null, id);

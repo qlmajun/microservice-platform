@@ -28,7 +28,7 @@ public interface IRoleMenuService extends ISuperService<SysRoleMenuDO> {
      * @param type    类型
      * @return
      */
-    List<SysMenu> findMenusByRoleIds(Set<Long> roleIds, Integer type);
+    List<SysMenu> findMenusByRoleIds(Set<String> roleIds, Integer type);
 
     /**
      * 删除角色菜单
@@ -37,5 +37,5 @@ public interface IRoleMenuService extends ISuperService<SysRoleMenuDO> {
      * @param menuId 菜单Id
      * @return
      */
-    int delete(Long roleId, Long menuId);
+    int delete(String roleId, String menuId);
 }

@@ -36,7 +36,7 @@ public interface IMenuService extends ISuperService<SysMenuDO> {
      * @param roleIds 角色ids
      * @return
      */
-    List<SysMenu> findByRoles(Set<Long> roleIds);
+    List<SysMenu> findByRoles(Set<String> roleIds);
 
     /**
      * 查询所有菜单
@@ -48,7 +48,7 @@ public interface IMenuService extends ISuperService<SysMenuDO> {
      * @param roleId
      * @param menuIds
      */
-    void setMenuToRole(Long roleId, Set<Long> menuIds);
+    void setMenuToRole(String roleId, Set<String> menuIds);
 
     /**
      * 查询所有一级菜单

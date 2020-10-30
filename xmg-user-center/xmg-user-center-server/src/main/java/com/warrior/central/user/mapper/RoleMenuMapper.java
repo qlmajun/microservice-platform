@@ -19,7 +19,7 @@ public interface RoleMenuMapper extends SuperMapper<SysRoleMenuDO> {
      * @param type    类型
      * @return
      */
-    List<SysMenu> findMenusByRoleIds(@Param("roleIds") Set<Long> roleIds, @Param("type") Integer type);
+    List<SysMenu> findMenusByRoleIds(@Param("roleIds") Set<String> roleIds, @Param("type") Integer type);
 
     /**
      * 根据角色编码和类型获取菜单信息
@@ -37,5 +37,5 @@ public interface RoleMenuMapper extends SuperMapper<SysRoleMenuDO> {
      * @param menuId 菜单Id
      * @return
      */
-    int delete(@Param("roleId") Long roleId, @Param("menuId") Long menuId);
+    int delete(@Param("roleId") String roleId, @Param("menuId") String menuId);
 }

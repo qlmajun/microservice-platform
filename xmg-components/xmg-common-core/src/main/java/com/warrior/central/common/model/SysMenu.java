@@ -22,7 +22,7 @@ public class SysMenu extends SuperEntity {
   /**
    * 父Id
    */
-  private Long parentId;
+  private String parentId;
 
   /**
    * 名称
@@ -72,10 +72,10 @@ public class SysMenu extends SuperEntity {
   /**
    * 角色id
    */
-  private Long roleId;
+  private String roleId;
 
   /**
    * 菜单Id集合
    */
-  private Set<Long> menuIds;
+  private Set<String> menuIds;
 }

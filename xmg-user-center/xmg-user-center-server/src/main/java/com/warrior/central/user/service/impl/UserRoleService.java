@@ -23,17 +23,17 @@ public class UserRoleService extends SuperServiceImpl<UserRoleMapper, SysRoleUse
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public List<SysRole> findRolesByUserId(Long userId) {
+    public List<SysRole> findRolesByUserId(String userId) {
         return userRoleMapper.findRolesByUserId(userId);
     }
 
     @Override
-    public List<SysRole> findRolesByUserIds(List<Long> userIds) {
+    public List<SysRole> findRolesByUserIds(List<String> userIds) {
         return userRoleMapper.findRolesByUserIds(userIds);
     }
 
     @Override
-    public int deleteUserRole(Long userId, Long roleId) {
+    public int deleteUserRole(String userId, String roleId) {
         return userRoleMapper.deleteUserRole(userId, roleId);
     }
 }

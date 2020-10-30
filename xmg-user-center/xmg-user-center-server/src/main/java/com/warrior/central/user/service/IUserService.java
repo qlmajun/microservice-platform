@@ -87,12 +87,12 @@ public interface IUserService extends ISuperService<SysUserDO> {
      * @param newPassword 新密码
      * @return
      */
-    Result updatePassword(Long id, String oldPassword, String newPassword);
+    Result updatePassword(String id, String oldPassword, String newPassword);
 
     /**
      * 删除用户
      */
-    boolean delUser(Long id);
+    boolean delUser(String id);
 
     /**
      * 新增or修改用户

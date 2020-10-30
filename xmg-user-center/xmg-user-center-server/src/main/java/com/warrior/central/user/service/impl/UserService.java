@@ -112,7 +112,8 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
         loginAppUser.setRoles(roles);
 
         //获取角色Id
-        Set<Long> roleIds = roles.parallelStream().map(SuperEntity::getId).collect(Collectors.toSet());
+        Set<String> roleIds = roles.parallelStream().map(SuperEntity::getId).collect(Collectors.toSet());
+
         //获取权限菜单
         List<SysMenu> menus = roleMenuMapper.findMenusByRoleIds(roleIds, CommonConstant.PERMISSION);
 
@@ -134,7 +135,7 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
         long total = page.getTotal();
         if (total > 0) {
             //获取所有的用户Id
-            List<Long> userIds = list.stream().map(SysUser::getId).collect(Collectors.toList());
+            List<String> userIds = list.stream().map(SysUser::getId).collect(Collectors.toList());
             //获取用户角色信息
             List<SysRole> roles = userRoleService.findRolesByUserIds(userIds);
             list.forEach(u -> u.setRoles(roles.stream().filter(r -> !ObjectUtils.notEqual(u.getId(), r.getUserId()))
@@ -144,7 +145,7 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
     }
 
     @Override
-    public Result updatePassword(Long id, String oldPassword, String newPassword) {
+    public Result updatePassword(String id, String oldPassword, String newPassword) {
         SysUserDO sysUser = baseMapper.selectById(id);
         if (StrUtil.isNotBlank(oldPassword)) {
             if (!passwordEncoder.matches(oldPassword, sysUser.getPassword())) {
@@ -162,7 +163,7 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
     }
 
     @Override
-    public boolean delUser(Long id) {
+    public boolean delUser(String id) {
         userRoleService.deleteUserRole(id, null);
         return baseMapper.deleteById(id) > 0;
     }
@@ -188,7 +189,7 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
             List roleIds = Arrays.asList(sysUser.getRoleId().split(","));
             if (!CollectionUtils.isEmpty(roleIds)) {
                 List<SysRoleUserDO> roleUsers = new ArrayList<>(roleIds.size());
-                roleIds.forEach(roleId -> roleUsers.add(new SysRoleUserDO(userDO.getId(), Long.parseLong(roleId.toString()))));
+                roleIds.forEach(roleId -> roleUsers.add(new SysRoleUserDO(userDO.getId(), roleId.toString())));
                 userRoleService.saveBatch(roleUsers);
             }
         }

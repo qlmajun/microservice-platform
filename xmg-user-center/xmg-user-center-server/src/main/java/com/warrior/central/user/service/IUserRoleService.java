@@ -17,7 +17,7 @@ public interface IUserRoleService extends ISuperService<SysRoleUserDO> {
      * @param userId
      * @return
      */
-    List<SysRole> findRolesByUserId(Long userId);
+    List<SysRole> findRolesByUserId(String userId);
 
     /**
      * 根据用户ids 获取
@@ -25,7 +25,7 @@ public interface IUserRoleService extends ISuperService<SysRoleUserDO> {
      * @param userIds
      * @return
      */
-    List<SysRole> findRolesByUserIds(List<Long> userIds);
+    List<SysRole> findRolesByUserIds(List<String> userIds);
 
     /**
      * 删除用户角色
@@ -34,5 +34,5 @@ public interface IUserRoleService extends ISuperService<SysRoleUserDO> {
      * @param roleId 角色Id
      * @return
      */
-    int deleteUserRole(Long userId, Long roleId);
+    int deleteUserRole(String userId, String roleId);
 }

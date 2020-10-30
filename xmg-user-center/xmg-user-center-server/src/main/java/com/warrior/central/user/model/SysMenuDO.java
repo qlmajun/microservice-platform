@@ -24,7 +24,7 @@ public class SysMenuDO extends SuperEntity {
   /**
    * 父Id
    */
-  private Long parentId;
+  private String parentId;
 
   /**
    * 菜单名

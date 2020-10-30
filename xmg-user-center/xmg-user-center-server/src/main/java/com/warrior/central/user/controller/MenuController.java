@@ -64,8 +64,8 @@ public class MenuController {
 
     @ApiOperation(value = "根据roleId获取对应的菜单")
     @GetMapping("/{roleId}/menus")
-    public List<Map<String, Object>> findMenusByRoleId(@PathVariable Long roleId) {
-        Set<Long> roleIds = new HashSet<>();
+    public List<Map<String, Object>> findMenusByRoleId(@PathVariable String roleId) {
+        Set<String> roleIds = new HashSet<>();
         roleIds.add(roleId);
         //获取该角色对应的菜单
         List<SysMenu> roleMenus = menuService.findByRoles(roleIds);
@@ -73,7 +73,7 @@ public class MenuController {
         List<SysMenuDO> allMenus = menuService.findAll();
         List<Map<String, Object>> authTrees = new ArrayList<>();
 
-        Map<Long, SysMenu> roleMenusMap = roleMenus.stream().collect(Collectors.toMap(SysMenu::getId, SysMenu -> SysMenu));
+        Map<String, SysMenu> roleMenusMap = roleMenus.stream().collect(Collectors.toMap(SysMenu::getId, SysMenu -> SysMenu));
 
         for (SysMenuDO sysMenu : allMenus) {
             Map<String, Object> authTree = new HashMap<>();

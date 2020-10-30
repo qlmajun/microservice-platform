@@ -70,9 +70,9 @@ public class RoleController {
      */
     @ApiOperation(value = "后台管理删除角色")
     @DeleteMapping("/roles/{id}")
-    public Result deleteRole(@PathVariable Long id) {
+    public Result deleteRole(@PathVariable String id) {
         try {
-            if (id == 1L) {
+            if ("1".equals(id)) {
                 return Result.failed("管理员不可以删除");
             }
             roleService.deleteRole(id);

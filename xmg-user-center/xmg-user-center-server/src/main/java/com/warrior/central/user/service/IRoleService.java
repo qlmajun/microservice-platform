@@ -50,5 +50,5 @@ public interface IRoleService extends ISuperService<SysRoleDO> {
      *
      * @param id
      */
-    void deleteRole(Long id);
+    void deleteRole(String id);
 }

@@ -137,7 +137,7 @@ public class UserController {
      */
     @PutMapping(value = "/users/{id}/password")
     @ApiOperation(value = "重置用户初始密码")
-    public Result resetPassword(@PathVariable Long id) {
+    public Result resetPassword(@PathVariable String id) {
         if (checkAdmin(id)) {
             return Result.failed(ADMIN_CHANGE_MSG);
         }
@@ -163,7 +163,7 @@ public class UserController {
      */
     @DeleteMapping(value = "/users/{id}")
     //@AuditLog(operation = "'删除用户:' + #id")
-    public Result delete(@PathVariable Long id) {
+    public Result delete(@PathVariable String id) {
         if (checkAdmin(id)) {
             return Result.failed(ADMIN_CHANGE_MSG);
         }
@@ -195,7 +195,7 @@ public class UserController {
             @ApiImplicitParam(name = "enabled", value = "是否启用", required = true, dataType = "Boolean")
     })
     public Result updateEnabled(@RequestParam Map<String, Object> params) {
-        Long id = MapUtils.getLong(params, "id");
+        String id = MapUtils.getString(params, "id");
         if (checkAdmin(id)) {
             return Result.failed(ADMIN_CHANGE_MSG);
         }
@@ -239,7 +239,7 @@ public class UserController {
     /**
      * 是否超级管理员
      */
-    private boolean checkAdmin(long id) {
-        return id == 1L;
+    private boolean checkAdmin(String id) {
+        return "1".equals(id);
     }
 }
