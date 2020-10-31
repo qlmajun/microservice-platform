@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrior.central.home.stay.mapper.ShopMapper">
+
+    <sql id="where">
+        <where>
+            t.enable_status = 1
+            <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='tel_number'">
+                and t.name  like concat('%', #{u.searchValue}, '%')
+            </if>
+            <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='tel_number'">
+                and t.tel_number  like concat('%', #{u.searchValue}, '%')
+            </if>
+        </where>
+    </sql>
+
+	<select id="listShop" resultType="com.warrior.central.home.stay.model.ShopDO">
+		SELECT * FROM zmsk_shop t
+        <include refid="where" />
+		ORDER BY t.id DESC
+	</select>
+</mapper>

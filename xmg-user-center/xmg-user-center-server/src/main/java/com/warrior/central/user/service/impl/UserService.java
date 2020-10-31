@@ -170,7 +170,7 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
 
     @Override
     public Result saveOrUpdateUser(SysUser sysUser) throws Exception {
-        if (sysUser.getId() == null) {
+        if (StringUtils.isEmpty(sysUser.getId())) {
             if (StringUtils.isBlank(sysUser.getType())) {
                 sysUser.setType(UserType.BACKEND.name());
             }
