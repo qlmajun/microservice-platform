@@ -16,12 +16,13 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 @TableName("zmsk_room_type")
 public class RoomTypeDO extends SuperEntity {
+
     private static final long serialVersionUID = -4610985049939498692L;
 
     /**
-     * 类型编码
+     * 门店Id
      */
-    private String code;
+    private String shopId;
 
     /**
      * 类型名称

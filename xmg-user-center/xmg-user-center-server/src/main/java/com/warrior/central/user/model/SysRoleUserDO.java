@@ -2,6 +2,7 @@ package com.warrior.central.user.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.warrior.central.common.model.SuperEntity;
 import lombok.*;
 
 /**
@@ -13,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_role_user")
-public class SysRoleUserDO extends Model<SysRoleUserDO> {
+public class SysRoleUserDO extends SuperEntity {
 
   private static final long serialVersionUID = 3984541544440409565L;
 

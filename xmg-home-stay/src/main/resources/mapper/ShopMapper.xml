@@ -6,7 +6,7 @@
     <sql id="where">
         <where>
             t.enable_status = 1
-            <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='tel_number'">
+            <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='name'">
                 and t.name  like concat('%', #{u.searchValue}, '%')
             </if>
             <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='tel_number'">

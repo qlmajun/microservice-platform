@@ -1,4 +1,4 @@
-package com.warrior.central.home.stay.service;
+package com.warrior.central.home.stay.service.shop;
 
 import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
@@ -26,4 +26,11 @@ public interface IShopService extends ISuperService<ShopDO> {
      * @return
      */
     Result saveOrUpdateShop(ShopDTO shopDTO) throws Exception;
+
+    /**
+     * 状态变更
+     * @param params
+     * @return
+     */
+    Result updateEnabled(Map<String, Object> params);
 }

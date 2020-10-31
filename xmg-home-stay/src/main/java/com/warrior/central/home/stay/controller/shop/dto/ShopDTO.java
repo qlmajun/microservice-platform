@@ -46,7 +46,7 @@ public class ShopDTO implements Serializable {
     /**
      * '门店可用状态，0：不可用，1：可用
      */
-    private Integer enableStatus = 1;
+    private Boolean enableStatus;
 
     /**
      * 创建时间

@@ -44,5 +44,5 @@ public class ShopDO extends SuperEntity {
     /**
      * '门店可用状态，0：不可用，1：可用
      */
-    private Integer enableStatus = 1;
+    private Boolean enableStatus = true;
 }

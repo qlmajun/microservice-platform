@@ -1,0 +1,54 @@
+<!-- 房间类型表单弹窗 -->
+<form id="room-type-form" lay-filter="room-type-form" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">房间类型</label>
+        <div class="layui-input-block">
+            <input name="name" placeholder="请输入类型" type="text" class="layui-input" maxlength="20"
+                   lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item" style="display: none">
+        <label class="layui-form-label">门店Id</label>
+        <div class="layui-input-block">
+            <input name="shopId" value="1322369217806258178" type="text" class="layui-input" maxlength="20"/>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" lay-filter="room-type-form-submit" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'admin', 'form'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+
+
+        // 回显user数据
+        var roomType = admin.getTempData('t_room_type');
+        console.log(roomType);
+        $('#room-type-form').attr('method', 'POST');
+        if (roomType) {
+            form.val('room-type-form', roomType);
+            $('#room-type-form').attr('method', 'POST');
+        }
+
+        // 表单提交事件
+        form.on('submit(room-type-form-submit)', function (data) {
+            layer.load(2);
+            admin.req('api-home-stay/room/types/saveOrUpdate', JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    admin.finishPopupCenter();
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, "POST");
+            return false;
+        });
+    });
+</script>

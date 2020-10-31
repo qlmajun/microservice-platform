@@ -13,6 +13,7 @@ import com.warrior.central.user.mapper.UserRoleMapper;
 import com.warrior.central.user.model.SysRoleDO;
 import com.warrior.central.user.service.IRoleService;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,7 @@ public class RoleService extends SuperServiceImpl<RoleMapper, SysRoleDO> impleme
     @Override
     @Transactional
     public Result saveOrUpdateRole(SysRole sysRole) throws Exception {
-        if (sysRole.getId() == null) {
+        if (StringUtils.isEmpty(sysRole.getId())) {
             this.saveRole(sysRole);
         } else {
             SysRoleDO sysRoleDO = new SysRoleDO();

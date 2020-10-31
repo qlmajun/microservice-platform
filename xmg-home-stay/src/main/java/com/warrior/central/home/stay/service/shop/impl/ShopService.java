@@ -1,16 +1,16 @@
-package com.warrior.central.home.stay.service.impl;
+package com.warrior.central.home.stay.service.shop.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.warrior.central.common.lock.DistributedLock;
 import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
-import com.warrior.central.common.model.SysUser;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.home.stay.controller.shop.dto.ShopDTO;
 import com.warrior.central.home.stay.mapper.ShopMapper;
 import com.warrior.central.home.stay.model.ShopDO;
-import com.warrior.central.home.stay.service.IShopService;
+import com.warrior.central.home.stay.service.shop.IShopService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,12 +28,8 @@ import java.util.Map;
  * @date 2020/10/31
  */
 @Service
+@Slf4j
 public class ShopService extends SuperServiceImpl<ShopMapper, ShopDO> implements IShopService {
-
-    private final static String LOCK_KEY_SHOP_NAME = "shopName:";
-
-    @Autowired
-    private DistributedLock lock;
 
     @Resource
     private ShopMapper shopMapper;
@@ -55,9 +52,22 @@ public class ShopService extends SuperServiceImpl<ShopMapper, ShopDO> implements
     public Result saveOrUpdateShop(ShopDTO shopDTO) throws Exception {
         ShopDO shopDO = new ShopDO();
         BeanUtils.copyProperties(shopDTO,shopDO);
-        boolean result = super.saveOrUpdateIdempotency(shopDO, lock
-                , LOCK_KEY_SHOP_NAME + shopDO.getName(), new QueryWrapper<ShopDO>().eq("name", shopDO.getName())
-                , shopDO.getName() + "已存在");
+        boolean result = super.saveOrUpdate(shopDO);
         return result ? Result.succeed(shopDO, "操作成功") : Result.failed("操作失败");
+    }
+
+    @Override
+    public Result updateEnabled(Map<String, Object> params) {
+        Long id = MapUtils.getLong(params, "id");
+        Boolean enabled = MapUtils.getBoolean(params, "enableStatus");
+        ShopDO shopDO = shopMapper.selectById(id);
+        if (shopDO == null) {
+            return Result.failed("客户不存在");
+        }
+        shopDO.setEnableStatus(enabled);
+        shopDO.setUpdateTime(new Date());
+        int i = baseMapper.updateById(shopDO);
+        log.info("修改客户状态：{}", shopDO);
+        return i > 0 ? Result.succeed(shopDO, "更新成功") : Result.failed("更新失败");
     }
 }

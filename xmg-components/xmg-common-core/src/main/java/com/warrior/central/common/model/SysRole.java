@@ -27,5 +27,5 @@ public class SysRole extends SuperEntity {
   /**
    * 用户Id
    */
-  private Long userId;
+  private String userId;
 }

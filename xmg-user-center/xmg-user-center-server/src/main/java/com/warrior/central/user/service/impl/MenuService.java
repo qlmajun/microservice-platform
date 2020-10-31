@@ -41,7 +41,7 @@ public class MenuService extends SuperServiceImpl<MenuMapper, SysMenuDO> impleme
 
         List<SysMenu> treeMenus = new ArrayList<>();
         for (SysMenu menu : menus) {
-            if (ObjectUtils.equals(-1L, menu.getParentId())) {
+            if("-1".equals(menu.getParentId())){
                 treeMenus.add(menu);
             }
             for (SysMenu sysMenu : menus) {

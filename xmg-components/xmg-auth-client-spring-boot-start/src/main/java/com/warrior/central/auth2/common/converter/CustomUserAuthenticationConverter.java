@@ -69,10 +69,10 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
                 authorities = user.getAuthorities();
                 principal = user;
             } else {
-                Integer id = (Integer) map.get("id");
+                String id = (String) map.get("id");
                 SysUser user = new SysUser();
                 user.setUsername((String) principal);
-                user.setId(Long.valueOf(id));
+                user.setId(id);
                 principal = user;
             }
             return new UsernamePasswordAuthenticationToken(principal, "N/A", authorities);
