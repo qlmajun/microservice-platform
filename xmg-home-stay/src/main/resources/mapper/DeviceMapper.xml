@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrior.central.home.stay.mapper.DeviceMapper">
+    <select id="listSoldDevice" resultType="com.warrior.central.home.stay.model.DeviceDO">
+	  SELECT
+		*
+	  FROM
+		zmsk_device t
+	  WHERE
+	    (t.shop_id is NOT NULL OR t.shop_id <![CDATA[!= ]]> '')
+        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='number'">
+            AND t.number LIKE concat('%', #{u.searchValue}, '%')
+        </if>
+        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apk_version'">
+            AND t.apk_version LIKE concat('%', #{u.searchValue}, '%')
+        </if>
+	  ORDER BY t.create_time DESC
+	</select>
+
+    <select id="listUnsoldDevice" resultType="com.warrior.central.home.stay.model.DeviceDO">
+	  SELECT
+		*
+	  FROM
+		zmsk_device t
+	  WHERE
+	    (t.shop_id IS NULL OR t.shop_id = '')
+        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='number'">
+            AND t.number LIKE concat('%', #{u.searchValue}, '%')
+        </if>
+        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apk_version'">
+            AND t.apk_version LIKE concat('%', #{u.searchValue}, '%')
+        </if>
+	  ORDER BY t.create_time DESC
+	</select>
+</mapper>
