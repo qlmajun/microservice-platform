@@ -34,4 +34,11 @@ public interface IDeviceService extends ISuperService<DeviceDO> {
      * @return
      */
     PageResult<DeviceDTO> listUnsoldDevice(Map<String, Object> params);
+
+    /**
+     * 删除设备
+     * @param deviceId 设备Id
+     * @return
+     */
+    boolean removeDevice(String deviceId);
 }

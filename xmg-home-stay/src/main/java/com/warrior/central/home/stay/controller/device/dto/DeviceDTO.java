@@ -1,5 +1,6 @@
 package com.warrior.central.home.stay.controller.device.dto;
 
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -79,5 +80,5 @@ public class DeviceDTO implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 }

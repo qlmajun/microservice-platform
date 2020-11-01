@@ -1,31 +1,31 @@
 <div class="layui-card">
     <div class="layui-card-header">
-        <h2 class="header-title">客户列表</h2>
+        <h2 class="header-title">已售设备</h2>
         <span class="layui-breadcrumb pull-right">
           <a href="#!console">首页</a>
-          <a><cite>客户列表</cite></a>
+          <a><cite>已售设备</cite></a>
         </span>
     </div>
     <div class="layui-card-body">
         <div class="layui-form toolbar">
             搜索：
-            <select id="customer-search-key">
+            <select id="sold-device-search-key">
                 <option value="">-请选择-</option>
-                <option value="name">客户名</option>
-                <option value="tel_number">电话号</option>
+                <option value="number">设备号</option>
+                <option value="apkVersion">apk版本</option>
             </select>&emsp;
-            <input id="customer-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
-            <button id="customer-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <input id="sold-device-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="sold-device-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
         </div>
 
         <!-- 数据表格 -->
-        <table class="layui-table" id="customer-table" lay-filter="customer-table"></table>
+        <table class="layui-table" id="sold-device-table" lay-filter="sold-device-table"></table>
     </div>
 </div>
 
 <!-- 表格状态列 -->
-<script type="text/html" id="customer-tpl-state">
-    <input type="checkbox" lay-filter="customer-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="正常|锁定"
+<script type="text/html" id="sold-device-tpl-state">
+    <input type="checkbox" lay-filter="sold-device-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="正常|锁定"
            {{d.enableStatus==true?'checked':''}}/>
 </script>
 
@@ -40,8 +40,8 @@
 
         //渲染表格
         table.render({
-            elem: '#customer-table',
-            url: config.base_server + 'home-stay/shops',
+            elem: '#sold-device-table',
+            url: config.base_server + 'home-stay/sold/devices',
             headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
@@ -50,7 +50,7 @@
                 {field: 'telNumber', sort: true, title: '电话'},
                 {field: 'address', sort: true, title: '地址'},
                 {field: 'deadline', sort: true, title: '到期日期'},
-                {field: 'enableStatus', sort: true, templet: '#customer-tpl-state', title: '状态'},
+                {field: 'enableStatus', sort: true, templet: '#sold-device-tpl-state', title: '状态'},
                 {
                     field: 'createTime', sort: true, templet: function (d) {
                         return util.toDateString(d.createTime);
@@ -61,14 +61,14 @@
 
 
         // 搜索按钮点击事件
-        $('#customer-btn-search').click(function () {
-            var key = $('#customer-search-key').val();
-            var value = $('#customer-search-value').val();
+        $('#sold-device').click(function () {
+            var key = $('#sold-device-search-key').val();
+            var value = $('#sold-device-search-value').val();
             table.reload('customer-table', {where: {searchKey: key, searchValue: value}});
         });
 
         // 修改user状态
-        form.on('switch(customer-tpl-state)', function (obj) {
+        form.on('switch(sold-device-tpl-state)', function (obj) {
             layer.load(2);
             admin.req('api-home-stay/shops/updateEnabled', {
                 id: obj.elem.value,

@@ -20,15 +20,15 @@
 
     <select id="listUnsoldDevice" resultType="com.warrior.central.home.stay.model.DeviceDO">
 	  SELECT
-		*
+		  *
 	  FROM
-		zmsk_device t
+		  zmsk_device t
 	  WHERE
 	    (t.shop_id IS NULL OR t.shop_id = '')
         <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='number'">
             AND t.number LIKE concat('%', #{u.searchValue}, '%')
         </if>
-        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apk_version'">
+        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apkVersion'">
             AND t.apk_version LIKE concat('%', #{u.searchValue}, '%')
         </if>
 	  ORDER BY t.create_time DESC

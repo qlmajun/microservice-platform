@@ -1,0 +1,74 @@
+<!-- 设备表单弹窗 -->
+<form id="device-form" lay-filter="device-form" class="layui-form model-form">
+  <input name="id" type="hidden"/>
+  <div class="layui-form-item">
+    <label class="layui-form-label">设备编号</label>
+    <div class="layui-input-block">
+      <input name="number" placeholder="设备编号" type="text" class="layui-input" maxlength="20"
+             lay-verify="required" required/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">设备IP</label>
+    <div class="layui-input-block">
+      <input name="ip" placeholder="请输入设备IP" type="text" class="layui-input" maxlength="20"
+             lay-verify="required" required/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">APK版本</label>
+    <div class="layui-input-block">
+      <input name="apkVersion" placeholder="请输入APK版本" type="text" class="layui-input"
+             lay-verify="required" required/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">MAC地址</label>
+    <div class="layui-input-block">
+      <input name="macId" placeholder="请输入MAC地址" type="text" class="layui-input"
+             lay-verify="required" required>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">CPU ID</label>
+    <div class="layui-input-block">
+      <input name="cupId" placeholder="请输入CPU ID" type="text" class="layui-input"
+             lay-verify="required" required>
+    </div>
+  </div>
+  <div class="layui-form-item model-form-footer">
+    <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+    <button class="layui-btn" lay-filter="device-form-submit" lay-submit>保存</button>
+  </div>
+</form>
+
+<script>
+  layui.use(['layer', 'admin', 'form'], function () {
+    var layer = layui.layer;
+    var admin = layui.admin;
+    var form = layui.form;
+
+    // 回显设备数据
+    var device = admin.getTempData('t_device');
+    console.log(device);
+    $('#device-form').attr('method', 'POST');
+    if (device) {
+      form.val('device-form', device);
+    }
+
+    // 表单提交事件
+    form.on('submit(device-form-submit)', function (data) {
+      layer.load(2);
+      admin.req('api-home-stay/devices/saveOrUpdate', JSON.stringify(data.field), function (data) {
+        layer.closeAll('loading');
+        if (data.resp_code == 0) {
+          layer.msg(data.resp_msg, {icon: 1, time: 1000});
+          admin.finishPopupCenter();
+        } else {
+          layer.msg(data.resp_msg, {icon: 2, time: 1000});
+        }
+      }, "POST");
+      return false;
+    });
+  });
+</script>

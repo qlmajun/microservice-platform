@@ -64,4 +64,9 @@ public class DeviceService extends SuperServiceImpl<DeviceMapper, DeviceDO> impl
         });
         return PageResult.<DeviceDTO>builder().data(deviceDTOS).code(0).count(page.getTotal()).build();
     }
+
+    @Override
+    public boolean removeDevice(String deviceId) {
+        return deviceMapper.deleteById(deviceId) > 0;
+    }
 }

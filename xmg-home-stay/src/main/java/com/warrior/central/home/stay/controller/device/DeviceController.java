@@ -53,4 +53,13 @@ public class DeviceController {
         return deviceService.listUnsoldDevice(params);
     }
 
+    @DeleteMapping("devices/{deviceId}")
+    public Result removeDevice(@PathVariable String deviceId){
+        boolean success = deviceService.removeDevice(deviceId);
+        if(!success){
+            return Result.failed("删除失败");
+        }
+        return Result.succeed("删除成功");
+    }
+
 }
