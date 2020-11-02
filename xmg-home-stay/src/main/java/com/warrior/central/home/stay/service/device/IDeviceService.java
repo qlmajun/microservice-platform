@@ -7,6 +7,7 @@ import com.warrior.central.home.stay.controller.device.dto.DeviceDTO;
 import com.warrior.central.home.stay.model.DeviceDO;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,4 +42,12 @@ public interface IDeviceService extends ISuperService<DeviceDO> {
      * @return
      */
     boolean removeDevice(String deviceId);
+
+    /**
+     * 设备销售
+     * @param shopId 门店Id
+     * @param deviceIds 设备Ids
+     * @return
+     */
+    boolean saleDevices(String shopId, List<String> deviceIds);
 }

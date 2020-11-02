@@ -16,10 +16,9 @@
 			device.create_time AS createTime
 		FROM
 			zmsk_device device
-		INNER JOIN zmsk_shop_order shopOrder ON shopOrder.id = device.order_id
-		LEFT JOIN zmsk_shop shop ON shop.id = shopOrder.shop_id
+		LEFT JOIN zmsk_shop shop ON shop.id = device.shop_id
 		WHERE
-		  1=1
+        (device.shop_id IS NOT NULL OR device.shop_id  <![CDATA[!= ]]> '')
 		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='shopName'">
 			AND shop.name LIKE concat('%', #{u.searchValue}, '%')
 		</if>
@@ -41,7 +40,6 @@
 			device.mac_id AS macId,
 			device.cup_id AS cupId,
 			device.online_time AS onlineTime,
-			shop.NAME AS shopName,
 			device.create_time AS createTime
 	  FROM
 		  zmsk_device device
@@ -53,6 +51,14 @@
         <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apkVersion'">
             AND device.apk_version LIKE concat('%', #{u.searchValue}, '%')
         </if>
-	  ORDER BY t.create_time DESC
+	  ORDER BY device.create_time DESC
 	</select>
+
+    <update id="saleDevices">
+        UPDATE zmsk_device SET shop_id = #{shopId}
+        WHERE id IN
+        <foreach item="deviceId" index="index" collection="deviceIds" open="(" separator="," close=")">
+            #{deviceId}
+        </foreach>
+    </update>
 </mapper>

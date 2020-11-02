@@ -6,6 +6,7 @@ import com.warrior.central.home.stay.controller.device.dto.DeviceDTO;
 import com.warrior.central.home.stay.model.DeviceDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
@@ -31,4 +32,12 @@ public interface DeviceMapper extends SuperMapper<DeviceDO> {
      * @return
      */
     List<DeviceDO> listUnsoldDevice(Page<DeviceDO> page,@Param("u") Map<String, Object> params);
+
+    /**
+     * 设备销售
+     * @param shopId 门店Id
+     * @param deviceIds 设备Ids
+     * @return
+     */
+    int saleDevices(@Param("shopId") String shopId, @Param("deviceIds") List<String> deviceIds);
 }

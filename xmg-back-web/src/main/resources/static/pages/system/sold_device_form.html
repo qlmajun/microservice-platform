@@ -1,0 +1,56 @@
+<!-- 设备表单弹窗 -->
+<form id="sold-device-form" lay-filter="sold-device-form" class="layui-form model-form">
+  <input name="id" type="hidden"/>
+  <div class="layui-form-item">
+    <label class="layui-form-label">门店</label>
+    <div class="layui-input-block">
+      <input name="shopName" type="text" class="layui-input" maxlength="20" disabled="disabled"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">设备号</label>
+    <div class="layui-input-block">
+      <input name="number" type="text" class="layui-input" maxlength="20" disabled="disabled"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">设备IP</label>
+    <div class="layui-input-block">
+      <input name="ip" type="text" class="layui-input" maxlength="20" disabled="disabled"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">APK版本</label>
+    <div class="layui-input-block">
+      <input name="apkVersion" type="text" class="layui-input" disabled="disabled"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">MAC地址</label>
+    <div class="layui-input-block">
+      <input name="macId" type="text" class="layui-input" disabled="disabled">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">CPU ID</label>
+    <div class="layui-input-block">
+      <input name="cupId" type="text" class="layui-input" disabled="disabled">
+    </div>
+  </div>
+</form>
+
+<script>
+  layui.use(['layer', 'admin', 'form'], function () {
+    var layer = layui.layer;
+    var admin = layui.admin;
+    var form = layui.form;
+
+    // 回显设备数据
+    var device = admin.getTempData('t_sold_device');
+    console.log(device);
+    $('#sold-device-form').attr('method', 'POST');
+    if (device) {
+      form.val('sold-device-form', device);
+    }
+  });
+</script>

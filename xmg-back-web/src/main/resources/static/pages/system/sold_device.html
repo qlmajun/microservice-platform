@@ -24,6 +24,11 @@
     </div>
 </div>
 
+<!-- 表格操作列 -->
+<script type="text/html" id="sold-device-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+</script>
+
 <!-- 表格状态列 -->
 <script type="text/html" id="sold-device-tpl-state">
     <input type="checkbox" lay-filter="sold-device-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="正常|锁定"
@@ -42,7 +47,7 @@
         //渲染表格
         table.render({
             elem: '#sold-device-table',
-            url: config.base_server + 'home-stay/sold/devices',
+            url: config.base_server + 'api-home-stay/sold/devices',
             headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
@@ -52,11 +57,13 @@
                 {field: 'ip', sort: true, title: 'IP'},
                 {field: 'apkVersion', sort: true, title: 'apk版本'},
                 {field: 'macId', sort: true, title: 'MAC ID'},
+                {field: 'cupId', sort: true, title: 'CPU ID'},
                 {
                     field: 'createTime', sort: true, templet: function (d) {
                         return util.toDateString(d.createTime);
                     }, title: '创建时间'
-                }
+                },
+                {fixed: 'right', align: 'center', toolbar: '#sold-device-table-bar', title: '操作'}
             ]]
         });
 
@@ -67,6 +74,30 @@
             var value = $('#sold-device-search-value').val();
             table.reload('sold-device-table', {where: {searchKey: key, searchValue: value}});
         });
+
+        // 工具条点击事件
+        table.on('tool(sold-device-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'detail') { // 修改
+                showDetailModel(data);
+            }
+        });
+
+        //显示表单弹窗
+        var showDetailModel = function (data) {
+            admin.putTempData('t_sold_device', data);
+            var title = '已售设备详情';
+            admin.popupCenter({
+                title: title,
+                path: 'pages/system/sold_device_form.html',
+                finish: function () {
+                    table.reload('unsold-device-table', {});
+                }
+            });
+        };
+
     });
 
 </script>

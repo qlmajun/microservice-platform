@@ -11,6 +11,7 @@ import com.warrior.central.home.stay.service.device.IDeviceService;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -61,5 +62,10 @@ public class DeviceService extends SuperServiceImpl<DeviceMapper, DeviceDO> impl
     @Override
     public boolean removeDevice(String deviceId) {
         return deviceMapper.deleteById(deviceId) > 0;
+    }
+
+    @Override
+    public boolean saleDevices(String shopId, List<String> deviceIds) {
+        return deviceMapper.saleDevices(shopId,deviceIds) > 0;
     }
 }
