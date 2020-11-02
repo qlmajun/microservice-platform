@@ -17,6 +17,7 @@
             <input id="unsold-device-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
             <button id="unsold-device-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
             <button id="unsold-device-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+            <button id="device-sell-btn-sell" class="layui-btn icon-btn"><i class="layui-icon">&#xe698;</i>销售</button>
         </div>
 
         <!-- 数据表格 -->
@@ -54,7 +55,7 @@
             headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
-                {field: 'id', sort: true, title: 'ID'},
+                {type: 'checkbox'},
                 {field: 'number', sort: true, title: '设备号'},
                 {field: 'ip', sort: true, title: 'IP'},
                 {field: 'apkVersion', sort: true, title: 'apk版本'},
@@ -80,6 +81,16 @@
         // 添加按钮点击事件
         $('#unsold-device-btn-add').click(function () {
             showEditModel();
+        });
+
+        // 销售按钮点击事件
+        $('#device-sell-btn-sell').click(function () {
+            var selectData = layui.table.checkStatus('unsold-device-table').data;
+            if(selectData.length == 0){
+                layer.msg('请勾选销售设备', {icon: 2, time: 1000});
+                return ;
+            }
+            showSellModel(selectData);
         });
 
         // 工具条点击事件
@@ -120,6 +131,7 @@
                 }
             });
         };
+
 
         // 修改user状态
         form.on('switch(unsold-device-tpl-state)', function (obj) {

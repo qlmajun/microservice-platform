@@ -35,7 +35,7 @@
         //渲染表格
         table.render({
             elem: '#room-type-table',
-            url: config.base_server + 'home-stay/room/types?shopId=1322369217806258178',
+            url: config.base_server + 'api-home-stay/room/types',
             headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
@@ -65,7 +65,7 @@
                 layer.confirm('确定删除此用户吗？', function (i) {
                     layer.close(i);
                     layer.load(2);
-                    admin.req('api-home-stay/types/'+obj.data.id, {}, function (data) {
+                    admin.req('api-home-stay/room/types/'+obj.data.id, {}, function (data) {
                         layer.closeAll('loading');
                         if (data.resp_code == 0) {
                             layer.msg(data.resp_msg, {icon: 1, time: 500});

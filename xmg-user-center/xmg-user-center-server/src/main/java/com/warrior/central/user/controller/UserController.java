@@ -3,6 +3,7 @@ package com.warrior.central.user.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.warrior.central.common.annotation.LoginUser;
 import com.warrior.central.common.constant.CommonConstant;
+import com.warrior.central.common.constant.SecurityConstants;
 import com.warrior.central.common.model.*;
 import com.warrior.central.common.utils.ExcelUtil;
 import com.warrior.central.user.model.SysUserDO;
@@ -12,8 +13,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -59,8 +62,9 @@ public class UserController {
      */
     @GetMapping(value = "/users/name/{username}")
     @ApiOperation(value = "根据用户名查询用户实体")
-    public SysUser selectByUsername(@PathVariable String username) {
-        return userService.selectByUsername(username);
+    public SysUser selectByUsername(@PathVariable String username, HttpServletRequest request) {
+        String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+        return userService.selectByUsername(username,shopId);
     }
 
     /**
@@ -71,8 +75,9 @@ public class UserController {
      */
     @GetMapping(value = "/users-anon/login", params = "username")
     @ApiOperation(value = "根据用户名查询用户")
-    public LoginAppUser findByUsername(String username) {
-        return userService.findByUsername(username);
+    public LoginAppUser findByUsername(String username,HttpServletRequest request) {
+        String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+        return userService.findByUsername(username,shopId);
     }
 
     /**
@@ -111,8 +116,9 @@ public class UserController {
             @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer")
     })
     @GetMapping("/users")
-    public PageResult<SysUser> findUsers(@RequestParam Map<String, Object> params) {
-        return userService.findUsers(params);
+    public PageResult<SysUser> findUsers(@RequestParam Map<String, Object> params,HttpServletRequest request) {
+        String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+        return userService.findUsers(params,shopId);
     }
 
     /**
@@ -178,7 +184,11 @@ public class UserController {
      * @return
      */
     @PostMapping("/users/saveOrUpdate")
-    public Result saveOrUpdate(@RequestBody SysUser sysUser) throws Exception {
+    public Result saveOrUpdate(@RequestBody SysUser sysUser,HttpServletRequest request) throws Exception {
+        if(StringUtils.isEmpty(sysUser.getShopId())){
+            String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+            sysUser.setShopId(shopId);
+        }
         return userService.saveOrUpdateUser(sysUser);
     }
 
@@ -208,8 +218,9 @@ public class UserController {
      * @return
      */
     @PostMapping("/users/export")
-    public void exportUser(@RequestParam Map<String, Object> params, HttpServletResponse response) throws IOException {
-        List<SysUserExcel> result = userService.findAllUsers(params);
+    public void exportUser(@RequestParam Map<String, Object> params,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+        List<SysUserExcel> result = userService.findAllUsers(params,shopId);
         //导出操作
         ExcelUtil.exportExcel(result, null, "用户", SysUserExcel.class, "user", response);
     }

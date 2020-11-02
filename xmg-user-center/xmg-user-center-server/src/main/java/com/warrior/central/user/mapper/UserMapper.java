@@ -19,8 +19,9 @@ public interface UserMapper extends SuperMapper<SysUserDO> {
     /**
      * 分页查询用户列表
      * @param page
+     * @param shopId
      * @param params
      * @return
      */
-    List<SysUser> findList(Page<SysUser> page, @Param("u") Map<String, Object> params);
+    List<SysUser> findList(Page<SysUser> page,@Param("shopId") String shopId, @Param("u") Map<String, Object> params);
 }

@@ -19,9 +19,10 @@ public interface IUserService extends ISuperService<SysUserDO> {
      * 根据用户名获取用户登入信息
      *
      * @param username 用户名
+     * @param shopId 门店Id
      * @return
      */
-    LoginAppUser findByUsername(String username);
+    LoginAppUser findByUsername(String username,String shopId);
 
     /**
      * 根据openId获取用户登入信息
@@ -43,9 +44,10 @@ public interface IUserService extends ISuperService<SysUserDO> {
      * 根据用户名查询用户
      *
      * @param username 用户名
+     * @param shopId 门店Id
      * @return
      */
-    SysUser selectByUsername(String username);
+    SysUser selectByUsername(String username,String shopId);
 
     /**
      * 根据openId查询用户信息
@@ -75,9 +77,10 @@ public interface IUserService extends ISuperService<SysUserDO> {
      * 用户列表
      *
      * @param params
+     * @param shopId 门店Id
      * @return
      */
-    PageResult<SysUser> findUsers(Map<String, Object> params);
+    PageResult<SysUser> findUsers(Map<String, Object> params,String shopId);
 
     /**
      * 更新密码
@@ -112,7 +115,8 @@ public interface IUserService extends ISuperService<SysUserDO> {
     /**
      * 查询全部用户
      * @param params
+     * @param shopId
      * @return
      */
-    List<SysUserExcel> findAllUsers(Map<String, Object> params);
+    List<SysUserExcel> findAllUsers(Map<String, Object> params,String shopId);
 }

@@ -20,9 +20,6 @@
             <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
             <button id="user-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
             <button id="user-btn-export" class="layui-btn icon-btn"><i class="layui-icon">&#xe601;</i>导出</button>
-            <button type="button" class="layui-btn" id="user-btn-import">
-                <i class="layui-icon">&#xe67c;</i>导入
-            </button>
         </div>
 
         <table class="layui-table" id="user-table" lay-filter="user-table"></table>
@@ -191,23 +188,6 @@
             }, 'GET');
         });
 
-        //上传
-        var importUrl = config.base_server + 'api-user/users/import';
-        upload.render({
-            elem: '#user-btn-import'
-            ,url: importUrl
-            ,accept: 'file' //普通文件
-            ,multiple: false
-            ,headers: {"Authorization" : "Bearer " + config.getToken().access_token}
-            ,done: function(data){
-                if (data.resp_code == 0) {
-                    layer.msg(data.resp_msg, {icon: 1, time: 500});
-                    table.reload('user-table', {});
-                } else {
-                    layer.msg(data.resp_msg, {icon: 2, time: 500});
-                }
-            }
-        });
 
         //判断权限，没有权限则隐藏按钮
         /*let resList = ['user-btn-add','user-btn-export','user-btn-import'];

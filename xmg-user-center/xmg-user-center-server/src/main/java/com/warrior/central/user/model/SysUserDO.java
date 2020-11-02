@@ -78,4 +78,9 @@ public class SysUserDO extends SuperEntity {
   @TableLogic
   private boolean isDel;
 
+  /**
+   * 门店Id
+   */
+  private String shopId;
+
 }

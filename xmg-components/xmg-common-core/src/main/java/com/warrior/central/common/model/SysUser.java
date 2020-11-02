@@ -62,6 +62,11 @@ public class SysUser extends SuperEntity {
 	private boolean isDel;
 
 	/**
+	 * 门店Id
+	 */
+	private String shopId;
+
+	/**
 	 * 角色
 	 */
 	private List<SysRole> roles;

@@ -23,6 +23,11 @@ public interface SecurityConstants {
     String USER_ID_HEADER = "x-userid-header";
 
     /**
+     * 用户门店Id信息头
+     */
+    String USER_SHOP_ID_HEADER = "x-user-shop-id-header";
+
+    /**
      * 角色信息头
      */
     String ROLE_HEADER = "x-role-header";

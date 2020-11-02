@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrior.central.home.stay.mapper.device.DeviceMapper">
+
+	<select id="listSoldDevice" resultType="com.warrior.central.home.stay.controller.device.dto.DeviceDTO">
+	  SELECT
+			device.id AS id,
+			device.number AS number,
+			device.ip AS ip,
+			device.apk_version AS apkVersion,
+			device.mac_id AS macId,
+			device.cup_id AS cupId,
+			device.online_time AS onlineTime,
+			shop.name AS shopName,
+			device.create_time AS createTime
+		FROM
+			zmsk_device device
+		INNER JOIN zmsk_shop_order shopOrder ON shopOrder.id = device.order_id
+		LEFT JOIN zmsk_shop shop ON shop.id = shopOrder.shop_id
+		WHERE
+		  1=1
+		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='shopName'">
+			AND shop.name LIKE concat('%', #{u.searchValue}, '%')
+		</if>
+		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='number'">
+			AND device.number LIKE concat('%', #{u.searchValue}, '%')
+		</if>
+		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apkVersion'">
+			AND device.apk_version LIKE concat('%', #{u.searchValue}, '%')
+		</if>
+		ORDER BY device.create_time DESC
+	</select>
+
+	<select id="listUnsoldDevice" resultType="com.warrior.central.home.stay.model.DeviceDO">
+	  SELECT
+			device.id AS id,
+			device.number AS number,
+			device.ip AS ip,
+			device.apk_version AS apkVersion,
+			device.mac_id AS macId,
+			device.cup_id AS cupId,
+			device.online_time AS onlineTime,
+			shop.NAME AS shopName,
+			device.create_time AS createTime
+	  FROM
+		  zmsk_device device
+	  WHERE
+	    (device.shop_id IS NULL OR device.shop_id = '')
+        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='number'">
+            AND device.number LIKE concat('%', #{u.searchValue}, '%')
+        </if>
+        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apkVersion'">
+            AND device.apk_version LIKE concat('%', #{u.searchValue}, '%')
+        </if>
+	  ORDER BY t.create_time DESC
+	</select>
+</mapper>

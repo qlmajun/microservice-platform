@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrior.central.home.stay.mapper.room.GuestRoomMapper">
+
+	<select id="listGuestRoom" resultType="com.warrior.central.home.stay.controller.room.dto.GuestRoomDTO">
+    SELECT
+			room.id AS id,
+			room.room_number AS roomNumber,
+			room.room_type_id AS roomTypeId,
+			roomType.NAME AS roomTypeName,
+			room.room_price AS roomPrice,
+			room.occupancy_status AS occupancyStatus,
+			room.create_time AS createTime
+		FROM
+			zmsk_guest_room room
+		LEFT JOIN zmsk_room_type roomType ON roomType.id = room.room_type_id
+		WHERE
+		  room.shop_id = #{shopId}
+		ORDER BY room.create_time DESC
+	</select>
+
+</mapper>

@@ -67,6 +67,11 @@ public class DeviceDTO implements Serializable {
     private String shopId;
 
     /**
+     * 门店名称
+     */
+    private String shopName;
+
+    /**
      * 设备有效期
      */
     private LocalDate deadline;

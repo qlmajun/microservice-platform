@@ -27,6 +27,7 @@ public class FeignHttpInterceptorConfig {
     public void initialize() {
         requestHeaders.add(SecurityConstants.USER_ID_HEADER);
         requestHeaders.add(SecurityConstants.USER_HEADER);
+        requestHeaders.add(SecurityConstants.USER_SHOP_ID_HEADER);
         requestHeaders.add(SecurityConstants.ROLE_HEADER);
         requestHeaders.add(CommonConstant.X_M_G_VERSION);
     }

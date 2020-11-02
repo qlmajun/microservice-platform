@@ -49,6 +49,7 @@ public class UserInfoHeaderFilter extends ZuulFilter {
                 SysUser user = (SysUser) authentication.getPrincipal();
                 ctx.addZuulRequestHeader(SecurityConstants.USER_ID_HEADER, String.valueOf(user.getId()));
                 ctx.addZuulRequestHeader(SecurityConstants.USER_HEADER, user.getUsername());
+                ctx.addZuulRequestHeader(SecurityConstants.USER_SHOP_ID_HEADER, user.getShopId());
             }
             OAuth2Authentication oauth2Authentication = (OAuth2Authentication) authentication;
             String clientId = oauth2Authentication.getOAuth2Request().getClientId();

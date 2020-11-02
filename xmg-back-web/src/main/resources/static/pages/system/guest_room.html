@@ -1,0 +1,129 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">房间管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>房间管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：
+            <select id="guest-room-search-key">
+                <option value="">-请选择-</option>
+                <option value="user_id">ID</option>
+                <option value="username">账号</option>
+                <option value="nick_name">用户名</option>
+                <option value="mobile">手机号</option>
+            </select>&emsp;
+            <input id="guest-room-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="guest-room-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="guest-room-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+
+        <table class="layui-table" id="guest-room-table" lay-filter="guest-room-table"></table>
+    </div>
+</div>
+
+
+<!-- 表格操作列 -->
+<script type="text/html" id="guest-room-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="guest-room-tpl-state">
+    <input type="checkbox" lay-filter="guest-room-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="未入住|已入住"
+           {{d.occupancyStatus==true?'checked':''}}/>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        // 渲染表格
+        table.render({
+            elem: '#guest-room-table',
+            url: config.base_server + 'api-home-stay/guest/rooms',
+            method: 'GET',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {field: 'id', sort: true, title: '编号'},
+                {field: 'roomNumber', sort: true, title: '房号'},
+                {field: 'roomTypeName', sort: true, title: '房间类型'},
+                {field: 'roomPrice', sort: true, title: '价格'},
+                {
+                    sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {field: 'occupancyStatus', sort: true, templet: '#guest-room-tpl-state', title: '状态'},
+                {fixed: 'right', align: 'center', toolbar: '#guest-room-table-bar', title: '操作', width: 175}
+            ]]
+        });
+
+        // 添加按钮点击事件
+        $('#guest-room-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 工具条点击事件
+        table.on('tool(guest-room-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if (layEvent === 'edit') { // 修改
+                showEditModel(data);
+            } else if (layEvent === 'del') { // 删除
+                layer.confirm('确定删除此用户吗？', function (i) {
+                    layer.close(i);
+                    layer.load(2);
+                    admin.req('api-user/users/'+obj.data.id, {}, function (data) {
+                        layer.closeAll('loading');
+                        if (data.resp_code == 0) {
+                            layer.msg(data.resp_msg, {icon: 1, time: 500});
+                            table.reload('user-table', {});
+                        } else {
+                            layer.msg(data.resp_msg, {icon: 2, time: 500});
+                        }
+                    }, 'delete');
+                });
+            }
+        });
+
+        //显示表单弹窗
+        var showEditModel = function (data) {
+            admin.putTempData('t_guest_room', data);
+            var title = data ? '修改用户' : '添加用户';
+            admin.popupCenter({
+                title: title,
+                path: 'pages/system/guest_room_form.html',
+                finish: function () {
+                    table.reload('guest-room-table', {});
+                }
+            });
+        };
+
+        // 搜索按钮点击事件
+        $('#guest-room-btn-search').click(function () {
+            var key = $('#guest-room-search-key').val();
+            var value = $('#guest-room-search-value').val();
+            table.reload('guest-room-table', {where: {searchKey: key, searchValue: value}});
+        });
+
+
+        //判断权限，没有权限则隐藏按钮
+        /*let resList = ['user-btn-add','user-btn-export','user-btn-import'];
+        for(let i = 0; i < resList.length; i++){
+            if (!admin.hasPerm(resList[i])) {
+                $('#'+resList[i]).hide();
+            }
+        }*/
+    });
+</script>

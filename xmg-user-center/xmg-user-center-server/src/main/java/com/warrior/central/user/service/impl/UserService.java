@@ -5,7 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.warrior.central.common.constant.CommonConstant;
 import com.warrior.central.common.lock.DistributedLock;
-import com.warrior.central.common.model.*;
+import com.warrior.central.common.model.LoginAppUser;
+import com.warrior.central.common.model.PageResult;
+import com.warrior.central.common.model.Result;
+import com.warrior.central.common.model.SuperEntity;
+import com.warrior.central.common.model.SysMenu;
+import com.warrior.central.common.model.SysRole;
+import com.warrior.central.common.model.SysUser;
+import com.warrior.central.common.model.UserType;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.user.mapper.RoleMenuMapper;
 import com.warrior.central.user.mapper.UserMapper;
@@ -14,6 +21,14 @@ import com.warrior.central.user.model.SysUserDO;
 import com.warrior.central.user.model.SysUserExcel;
 import com.warrior.central.user.service.IUserRoleService;
 import com.warrior.central.user.service.IUserService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -23,10 +38,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
-import javax.annotation.Resource;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 用户相关操作服务接口实现
@@ -56,8 +67,8 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
     private DistributedLock lock;
 
     @Override
-    public LoginAppUser findByUsername(String username) {
-        SysUser user = this.selectByUsername(username);
+    public LoginAppUser findByUsername(String username,String shopId) {
+        SysUser user = this.selectByUsername(username,shopId);
         return getLoginAppUser(user);
     }
 
@@ -74,8 +85,13 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
     }
 
     @Override
-    public SysUser selectByUsername(String username) {
-        List<SysUserDO> users = baseMapper.selectList(new QueryWrapper<SysUserDO>().eq("username", username));
+    public SysUser selectByUsername(String username,String shopId) {
+        QueryWrapper<SysUserDO> queryWrapper = new QueryWrapper<SysUserDO>();
+        queryWrapper.eq("username", username);
+        if(StringUtils.isNotEmpty(shopId)){
+            queryWrapper.and(wrapper -> wrapper.eq("shop_id", shopId));
+        }
+        List<SysUserDO> users = baseMapper.selectList(queryWrapper);
         return getUser(users);
     }
 
@@ -128,10 +144,10 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
     }
 
     @Override
-    public PageResult<SysUser> findUsers(Map<String, Object> params) {
+    public PageResult<SysUser> findUsers(Map<String, Object> params,String shopId) {
         Page<SysUser> page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));
         //查询获取用户信息
-        List<SysUser> list = userMapper.findList(page, params);
+        List<SysUser> list = userMapper.findList(page,shopId,params);
         long total = page.getTotal();
         if (total > 0) {
             //获取所有的用户Id
@@ -215,9 +231,9 @@ public class UserService extends SuperServiceImpl<UserMapper, SysUserDO> impleme
     }
 
     @Override
-    public List<SysUserExcel> findAllUsers(Map<String, Object> params) {
+    public List<SysUserExcel> findAllUsers(Map<String, Object> params,String shopId) {
         List<SysUserExcel> sysUserExcels = new ArrayList<>();
-        List<SysUser> list = baseMapper.findList(new Page<>(1, -1), params);
+        List<SysUser> list = baseMapper.findList(new Page<>(1, -1), shopId,params);
 
         for (SysUser sysUser : list) {
             SysUserExcel sysUserExcel = new SysUserExcel();

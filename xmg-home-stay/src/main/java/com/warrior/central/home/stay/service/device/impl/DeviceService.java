@@ -40,13 +40,7 @@ public class DeviceService extends SuperServiceImpl<DeviceMapper, DeviceDO> impl
     public PageResult<DeviceDTO> listSoldDevice(Map<String, Object> params) {
         Page<DeviceDO> page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));
         //获取设备列表
-        List<DeviceDO> deviceDOList = deviceMapper.listSoldDevice(page,params);
-        List<DeviceDTO> deviceDTOS = new ArrayList<>(deviceDOList.size());
-        deviceDOList.stream().forEach(deviceDO -> {
-            DeviceDTO deviceDTO = new DeviceDTO();
-            BeanUtils.copyProperties(deviceDO,deviceDTO);
-            deviceDTOS.add(deviceDTO);
-        });
+        List<DeviceDTO> deviceDTOS = deviceMapper.listSoldDevice(page,params);
         return PageResult.<DeviceDTO>builder().data(deviceDTOS).code(0).count(page.getTotal()).build();
     }
 

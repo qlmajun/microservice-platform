@@ -25,4 +25,11 @@ public interface IRoomTypeService extends ISuperService<RoomTypeDO> {
      * @return
      */
     List<RoomTypeDTO> listRoomType(String shopId);
+
+    /**
+     * 删除房间类型
+     * @param roomTypeId 房间类型Id
+     * @return
+     */
+    boolean removeRoomType(String roomTypeId);
 }

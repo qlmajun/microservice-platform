@@ -11,6 +11,7 @@
             搜索：
             <select id="sold-device-search-key">
                 <option value="">-请选择-</option>
+                <option value="number">购买门店</option>
                 <option value="number">设备号</option>
                 <option value="apkVersion">apk版本</option>
             </select>&emsp;
@@ -46,11 +47,11 @@
             page: true,
             cols: [[
                 {field: 'id', sort: true, title: 'ID'},
-                {field: 'name', sort: true, title: '客户名'},
-                {field: 'telNumber', sort: true, title: '电话'},
-                {field: 'address', sort: true, title: '地址'},
-                {field: 'deadline', sort: true, title: '到期日期'},
-                {field: 'enableStatus', sort: true, templet: '#sold-device-tpl-state', title: '状态'},
+                {field: 'shopName', sort: true, title: '门店'},
+                {field: 'number', sort: true, title: '设备号'},
+                {field: 'ip', sort: true, title: 'IP'},
+                {field: 'apkVersion', sort: true, title: 'apk版本'},
+                {field: 'macId', sort: true, title: 'MAC ID'},
                 {
                     field: 'createTime', sort: true, templet: function (d) {
                         return util.toDateString(d.createTime);
@@ -61,29 +62,10 @@
 
 
         // 搜索按钮点击事件
-        $('#sold-device').click(function () {
+        $('#sold-device-btn-search').click(function () {
             var key = $('#sold-device-search-key').val();
             var value = $('#sold-device-search-value').val();
-            table.reload('customer-table', {where: {searchKey: key, searchValue: value}});
-        });
-
-        // 修改user状态
-        form.on('switch(sold-device-tpl-state)', function (obj) {
-            layer.load(2);
-            admin.req('api-home-stay/shops/updateEnabled', {
-                id: obj.elem.value,
-                enabled: obj.elem.checked ? true : false
-            }, function (data) {
-                layer.closeAll('loading');
-                if (data.resp_code == 0) {
-                    layer.msg(data.resp_msg, {icon: 1, time: 500});
-                    //table.reload('table-user', {});
-                } else {
-                    layer.msg(data.resp_msg, {icon: 2, time: 500});
-                    $(obj.elem).prop('checked', !obj.elem.checked);
-                    form.render('checkbox');
-                }
-            }, 'POST');
+            table.reload('sold-device-table', {where: {searchKey: key, searchValue: value}});
         });
     });
 

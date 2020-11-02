@@ -44,4 +44,9 @@ public class RoomTypeService extends SuperServiceImpl<RoomTypeMapper, RoomTypeDO
         });
         return roomTypeDTOS;
     }
+
+    @Override
+    public boolean removeRoomType(String roomTypeId) {
+        return roomTypeMapper.deleteById(roomTypeId) > 0;
+    }
 }
