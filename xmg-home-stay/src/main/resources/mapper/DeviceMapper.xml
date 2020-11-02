@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.warrior.central.home.stay.mapper.DeviceMapper">
+<mapper namespace="com.warrior.central.home.stay.mapper.device.DeviceMapper">
     <select id="listSoldDevice" resultType="com.warrior.central.home.stay.model.DeviceDO">
 	  SELECT
 		*

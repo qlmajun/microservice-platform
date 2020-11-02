@@ -1,4 +1,4 @@
-package com.warrior.central.home.stay.mapper;
+package com.warrior.central.home.stay.mapper.room;
 
 import com.warrior.central.db.mapper.SuperMapper;
 import com.warrior.central.home.stay.model.RoomReserveDO;

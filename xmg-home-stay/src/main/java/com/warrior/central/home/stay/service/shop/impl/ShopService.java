@@ -1,19 +1,16 @@
 package com.warrior.central.home.stay.service.shop.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.warrior.central.common.lock.DistributedLock;
 import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.home.stay.controller.shop.dto.ShopDTO;
-import com.warrior.central.home.stay.mapper.ShopMapper;
+import com.warrior.central.home.stay.mapper.shop.ShopMapper;
 import com.warrior.central.home.stay.model.ShopDO;
 import com.warrior.central.home.stay.service.shop.IShopService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

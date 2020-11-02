@@ -1,4 +1,4 @@
-package com.warrior.central.home.stay.mapper;
+package com.warrior.central.home.stay.mapper.shop;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.warrior.central.common.model.SysUser;
