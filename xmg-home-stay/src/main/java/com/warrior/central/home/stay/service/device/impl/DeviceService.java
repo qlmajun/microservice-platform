@@ -63,9 +63,4 @@ public class DeviceService extends SuperServiceImpl<DeviceMapper, DeviceDO> impl
     public boolean removeDevice(String deviceId) {
         return deviceMapper.deleteById(deviceId) > 0;
     }
-
-    @Override
-    public boolean saleDevices(String shopId, List<String> deviceIds) {
-        return deviceMapper.saleDevices(shopId,deviceIds) > 0;
-    }
 }

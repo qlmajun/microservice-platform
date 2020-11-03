@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 /**
  * @author majun
- * @description 门店订单表映射封装对象
+ * @description 门店设备订购表映射封装对象
  * @date 2020/10/31
  */
 @Setter
@@ -16,8 +16,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@TableName("zmsk_shop_order")
-public class ShopOrderDO extends SuperEntity {
+@TableName("zmsk_shop_device_order")
+public class ShopDeviceOrderDO extends SuperEntity {
     private static final long serialVersionUID = -1108161430653263027L;
 
     /**
@@ -26,12 +26,7 @@ public class ShopOrderDO extends SuperEntity {
     private String shopId;
 
     /**
-     * 支付金额
+     * 设备Id
      */
-    private BigDecimal amountMoney;
-
-    /**
-     * 订单类型：1：购买，2：续费，3：短信购买
-     */
-    private Integer orderType;
+    private String deviceId;
 }

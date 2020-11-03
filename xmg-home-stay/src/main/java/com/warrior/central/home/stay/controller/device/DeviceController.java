@@ -55,6 +55,11 @@ public class DeviceController {
         return deviceService.listUnsoldDevice(params);
     }
 
+    /**
+     * 删除设备
+     * @param deviceId 设备Id
+     * @return
+     */
     @DeleteMapping("devices/{deviceId}")
     public Result removeDevice(@PathVariable String deviceId){
         boolean success = deviceService.removeDevice(deviceId);
@@ -63,21 +68,4 @@ public class DeviceController {
         }
         return Result.succeed("删除成功");
     }
-
-    /**
-     * 设备销售
-     * @param shopId 门店Id
-     * @param deviceIds 设备Id,多个设备使用逗号分隔
-     * @return
-     */
-    @PostMapping("devices/sale")
-    public Result saleDevices(String shopId,String deviceIds){
-        List<String> deviceIdList = Arrays.asList(deviceIds.split(","));
-        boolean success = deviceService.saleDevices(shopId,deviceIdList);
-        if(!success){
-            return Result.failed("销售失败");
-        }
-        return Result.succeed("销售成功");
-    }
-
 }

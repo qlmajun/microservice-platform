@@ -52,16 +52,6 @@ public class DeviceDO extends SuperEntity {
     private LocalDateTime onlineTime;
 
     /**
-     * 订单Id
-     */
-    private String orderId;
-
-    /**
-     * 门店Id
-     */
-    private String shopId;
-
-    /**
      * 设备有效期
      */
     private LocalDate deadline;

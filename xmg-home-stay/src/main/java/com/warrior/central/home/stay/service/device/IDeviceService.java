@@ -42,12 +42,4 @@ public interface IDeviceService extends ISuperService<DeviceDO> {
      * @return
      */
     boolean removeDevice(String deviceId);
-
-    /**
-     * 设备销售
-     * @param shopId 门店Id
-     * @param deviceIds 设备Ids
-     * @return
-     */
-    boolean saleDevices(String shopId, List<String> deviceIds);
 }

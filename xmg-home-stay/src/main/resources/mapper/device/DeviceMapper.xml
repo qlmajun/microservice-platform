@@ -12,16 +12,15 @@
 			device.mac_id AS macId,
 			device.cup_id AS cupId,
 			device.online_time AS onlineTime,
+		  deviceOrder.shop_id AS shopId,
 			shop.name AS shopName,
 			device.create_time AS createTime
 		FROM
 			zmsk_device device
-		LEFT JOIN zmsk_shop shop ON shop.id = device.shop_id
+		INNER JOIN zmsk_shop_device_order deviceOrder ON deviceOrder.device_id = device.id
+		LEFT JOIN zmsk_shop shop ON shop.id = deviceOrder.shop_id
 		WHERE
-        (device.shop_id IS NOT NULL OR device.shop_id  <![CDATA[!= ]]> '')
-		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='shopName'">
-			AND shop.name LIKE concat('%', #{u.searchValue}, '%')
-		</if>
+       1=1
 		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='number'">
 			AND device.number LIKE concat('%', #{u.searchValue}, '%')
 		</if>
@@ -39,26 +38,17 @@
 			device.apk_version AS apkVersion,
 			device.mac_id AS macId,
 			device.cup_id AS cupId,
-			device.online_time AS onlineTime,
 			device.create_time AS createTime
 	  FROM
 		  zmsk_device device
 	  WHERE
-	    (device.shop_id IS NULL OR device.shop_id = '')
-        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='number'">
-            AND device.number LIKE concat('%', #{u.searchValue}, '%')
-        </if>
-        <if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apkVersion'">
-            AND device.apk_version LIKE concat('%', #{u.searchValue}, '%')
-        </if>
+		  device.id NOT IN (SELECT device_id FROM zmsk_shop_device_order )
+		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='number'">
+    AND device.number LIKE concat('%', #{u.searchValue}, '%')
+		</if>
+		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='apkVersion'">
+    AND device.apk_version LIKE concat('%', #{u.searchValue}, '%')
+		</if>
 	  ORDER BY device.create_time DESC
 	</select>
-
-    <update id="saleDevices">
-        UPDATE zmsk_device SET shop_id = #{shopId}
-        WHERE id IN
-        <foreach item="deviceId" index="index" collection="deviceIds" open="(" separator="," close=")">
-            #{deviceId}
-        </foreach>
-    </update>
 </mapper>

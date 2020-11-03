@@ -57,11 +57,6 @@ public class DeviceDTO implements Serializable {
     private LocalDateTime onlineTime;
 
     /**
-     * 订单Id
-     */
-    private String orderId;
-
-    /**
      * 门店Id
      */
     private String shopId;

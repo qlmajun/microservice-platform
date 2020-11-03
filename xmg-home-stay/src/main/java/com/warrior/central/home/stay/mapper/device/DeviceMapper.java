@@ -32,12 +32,4 @@ public interface DeviceMapper extends SuperMapper<DeviceDO> {
      * @return
      */
     List<DeviceDO> listUnsoldDevice(Page<DeviceDO> page,@Param("u") Map<String, Object> params);
-
-    /**
-     * 设备销售
-     * @param shopId 门店Id
-     * @param deviceIds 设备Ids
-     * @return
-     */
-    int saleDevices(@Param("shopId") String shopId, @Param("deviceIds") List<String> deviceIds);
 }
