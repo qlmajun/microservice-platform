@@ -1,7 +1,7 @@
 package com.warrior.central.home.stay.service.shop;
 
 import com.warrior.central.common.service.ISuperService;
-import com.warrior.central.home.stay.model.ShopDeviceOrderDO;
+import com.warrior.central.home.stay.model.shop.ShopDeviceOrderDO;
 import java.util.List;
 
 /**

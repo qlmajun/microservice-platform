@@ -2,7 +2,7 @@ package com.warrior.central.home.stay.service.shop.impl;
 
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.home.stay.mapper.shop.ShopDeviceOrderMapper;
-import com.warrior.central.home.stay.model.ShopDeviceOrderDO;
+import com.warrior.central.home.stay.model.shop.ShopDeviceOrderDO;
 import com.warrior.central.home.stay.service.shop.IShopDeviceOrderService;
 import java.util.ArrayList;
 import java.util.List;

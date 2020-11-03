@@ -1,9 +1,9 @@
 <div class="layui-card">
     <div class="layui-card-header">
-        <h2 class="header-title">房间管理</h2>
+        <h2 class="header-title">客房管理</h2>
         <span class="layui-breadcrumb pull-right">
           <a href="#!console">首页</a>
-          <a><cite>房间管理</cite></a>
+          <a><cite>客房管理</cite></a>
         </span>
     </div>
     <div class="layui-card-body">
@@ -29,6 +29,7 @@
 <!-- 表格操作列 -->
 <script type="text/html" id="guest-room-table-bar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="bind">绑定</a>
     <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
 </script>
 
@@ -65,7 +66,8 @@
                     }, title: '创建时间'
                 },
                 {field: 'occupancyStatus', sort: true, templet: '#guest-room-tpl-state', title: '状态'},
-                {fixed: 'right', align: 'center', toolbar: '#guest-room-table-bar', title: '操作', width: 175}
+                {field: 'deviceNumber', sort: true, title: '绑定设备号'},
+                {fixed: 'right', align: 'center', toolbar: '#guest-room-table-bar', title: '操作'}
             ]]
         });
 
@@ -80,11 +82,17 @@
             var layEvent = obj.event;
             if (layEvent === 'edit') { // 修改
                 showEditModel(data);
+            }else if(layEvent === 'bind'){ //绑定
+                if(data.deviceNumber == '' || data.deviceNumber == null || data.deviceNumber == undefined ){
+                    showBindModel(data);
+                }else{
+                    layer.msg('该房间已绑定设备', {icon: 2, time: 1000});
+                }
             } else if (layEvent === 'del') { // 删除
                 layer.confirm('确定删除此用户吗？', function (i) {
                     layer.close(i);
                     layer.load(2);
-                    admin.req('api-user/users/'+obj.data.id, {}, function (data) {
+                    admin.req('api-home-stay/users/'+obj.data.id, {}, function (data) {
                         layer.closeAll('loading');
                         if (data.resp_code == 0) {
                             layer.msg(data.resp_msg, {icon: 1, time: 500});
@@ -100,7 +108,7 @@
         //显示表单弹窗
         var showEditModel = function (data) {
             admin.putTempData('t_guest_room', data);
-            var title = data ? '修改用户' : '添加用户';
+            var title = data ? '修改客房信息' : '添加客房信息';
             admin.popupCenter({
                 title: title,
                 path: 'pages/system/guest_room_form.html',
@@ -109,6 +117,20 @@
                 }
             });
         };
+
+        //显示绑定表单弹窗
+        var showBindModel = function (data) {
+            var roomNumber = data.roomNumber;
+            admin.putTempData('t_guest_bind_room', data);
+            var title = roomNumber + '设备绑定';
+            admin.popupCenter({
+                title: title,
+                path: 'pages/system/guest_room_bind_form.html',
+                finish: function () {
+                    table.reload('guest-room-table', {});
+                }
+            });
+        }
 
         // 搜索按钮点击事件
         $('#guest-room-btn-search').click(function () {

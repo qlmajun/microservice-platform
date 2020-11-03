@@ -4,10 +4,10 @@ import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
 import com.warrior.central.common.service.ISuperService;
 import com.warrior.central.home.stay.controller.device.dto.DeviceDTO;
-import com.warrior.central.home.stay.model.DeviceDO;
+import com.warrior.central.home.stay.model.device.DeviceDO;
+import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,4 +42,11 @@ public interface IDeviceService extends ISuperService<DeviceDO> {
      * @return
      */
     boolean removeDevice(String deviceId);
+
+    /**
+     * 获取门店没有绑定客房的设备列表
+     * @param shopId 门店Id
+     * @return
+     */
+    List<DeviceDTO>  listUnBindRoomDevices(String shopId);
 }

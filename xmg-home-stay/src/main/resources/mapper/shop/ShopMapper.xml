@@ -15,7 +15,7 @@
         </where>
     </sql>
 
-	<select id="listShop" resultType="com.warrior.central.home.stay.model.ShopDO">
+	<select id="listShop" resultType="com.warrior.central.home.stay.model.shop.ShopDO">
 		SELECT * FROM zmsk_shop t
         <include refid="where" />
 		ORDER BY t.id DESC

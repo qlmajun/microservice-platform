@@ -6,7 +6,7 @@ import com.warrior.central.common.model.Result;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.home.stay.controller.shop.dto.ShopDTO;
 import com.warrior.central.home.stay.mapper.shop.ShopMapper;
-import com.warrior.central.home.stay.model.ShopDO;
+import com.warrior.central.home.stay.model.shop.ShopDO;
 import com.warrior.central.home.stay.service.shop.IShopService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;

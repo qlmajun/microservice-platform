@@ -3,7 +3,7 @@ package com.warrior.central.home.stay.service.room;
 import com.warrior.central.common.model.Result;
 import com.warrior.central.common.service.ISuperService;
 import com.warrior.central.home.stay.controller.room.dto.RoomTypeDTO;
-import com.warrior.central.home.stay.model.RoomTypeDO;
+import com.warrior.central.home.stay.model.room.RoomTypeDO;
 
 import java.util.List;
 

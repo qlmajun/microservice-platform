@@ -1,0 +1,63 @@
+<!-- 房间设备绑定表单弹窗 -->
+<form id="guest-room-bind-form" lay-filter="guest-room-bind-form" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">绑定设备号</label>
+        <div class="layui-input-block">
+            <select name="deviceId" id="deviceId" lay-verify="required">
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" lay-filter="guest-room-bind-form-submit" lay-submit>绑定</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'admin', 'form', 'formSelects'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+
+        // 获取门店没有绑定客房的设备列表
+        layer.load(2);
+        admin.req('api-home-stay/unbind/room/devices', {}, function (data) {
+            layer.closeAll('loading');
+            if (0 == data.resp_code) {
+                // 渲染下拉框
+                $("#deviceId").append("<option value=\"\">-请选择绑定设备-</option>");
+                for (var i = 0; i < data.datas.length; i++) {
+                    $("#deviceId").append("<option value=\""+data.datas[i].id+"\">"+data.datas[i].number+"</option>");
+                }
+                //重新渲染
+                layui.form.render("select");
+
+                // 回显客房数据
+                var guestRoom = admin.getTempData('t_guest_bind_room');
+                $('#guest-room-bind-form').attr('method', 'POST');
+                if (guestRoom) {
+                    form.val('guest-room-bind-form', guestRoom);
+                    $('#guest-room-bind-form').attr('method', 'POST');
+                }
+            } else {
+                layer.msg('获取未绑定设备的客房列表失败', {icon: 2, time: 500});
+            }
+        }, 'GET');
+
+        // 表单提交事件
+        form.on('submit(guest-room-bind-form-submit)', function (data) {
+            layer.load(2);
+            admin.req('api-home-stay/room/device/bind', JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    admin.finishPopupCenter();
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, "POST");
+            return false;
+        });
+    });
+</script>

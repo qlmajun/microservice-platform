@@ -6,12 +6,11 @@ import com.warrior.central.common.model.Result;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.home.stay.controller.device.dto.DeviceDTO;
 import com.warrior.central.home.stay.mapper.device.DeviceMapper;
-import com.warrior.central.home.stay.model.DeviceDO;
+import com.warrior.central.home.stay.model.device.DeviceDO;
 import com.warrior.central.home.stay.service.device.IDeviceService;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -62,5 +61,10 @@ public class DeviceService extends SuperServiceImpl<DeviceMapper, DeviceDO> impl
     @Override
     public boolean removeDevice(String deviceId) {
         return deviceMapper.deleteById(deviceId) > 0;
+    }
+
+    @Override
+    public List<DeviceDTO> listUnBindRoomDevices(String shopId) {
+        return deviceMapper.listUnBindRoomDevices(shopId);
     }
 }

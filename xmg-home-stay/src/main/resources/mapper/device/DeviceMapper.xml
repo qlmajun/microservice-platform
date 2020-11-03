@@ -30,7 +30,7 @@
 		ORDER BY device.create_time DESC
 	</select>
 
-	<select id="listUnsoldDevice" resultType="com.warrior.central.home.stay.model.DeviceDO">
+	<select id="listUnsoldDevice" resultType="com.warrior.central.home.stay.model.device.DeviceDO">
 	  SELECT
 			device.id AS id,
 			device.number AS number,
@@ -50,5 +50,23 @@
     AND device.apk_version LIKE concat('%', #{u.searchValue}, '%')
 		</if>
 	  ORDER BY device.create_time DESC
+	</select>
+
+	<select id="listUnBindRoomDevices" resultType="com.warrior.central.home.stay.controller.device.dto.DeviceDTO">
+    SELECT
+			device.id AS id,
+			device.number AS number,
+			device.ip AS ip,
+			device.apk_version AS apkVersion,
+			device.mac_id AS macId,
+			device.cup_id AS cupId,
+			device.online_time AS onlineTime,
+			device.create_time AS createTime
+		FROM
+			zmsk_device device
+			INNER JOIN zmsk_shop_device_order deviceOrder ON deviceOrder.device_id = device.id
+			AND deviceOrder.shop_id = #{shopId}
+		WHERE
+			device.id NOT IN ( SELECT device_id FROM zmsk_room_device_bind WHERE shop_id = #{shopId} )
 	</select>
 </mapper>

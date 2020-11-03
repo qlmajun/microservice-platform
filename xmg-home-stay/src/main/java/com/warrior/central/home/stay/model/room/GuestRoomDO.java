@@ -1,4 +1,4 @@
-package com.warrior.central.home.stay.model;
+package com.warrior.central.home.stay.model.room;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.warrior.central.common.model.SuperEntity;

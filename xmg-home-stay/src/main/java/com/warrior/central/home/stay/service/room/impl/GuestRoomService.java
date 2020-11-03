@@ -6,7 +6,7 @@ import com.warrior.central.common.model.Result;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.home.stay.controller.room.dto.GuestRoomDTO;
 import com.warrior.central.home.stay.mapper.room.GuestRoomMapper;
-import com.warrior.central.home.stay.model.GuestRoomDO;
+import com.warrior.central.home.stay.model.room.GuestRoomDO;
 import com.warrior.central.home.stay.service.room.IGuestRoomService;
 import java.util.List;
 import java.util.Map;
@@ -40,4 +40,8 @@ public class GuestRoomService extends SuperServiceImpl<GuestRoomMapper, GuestRoo
     return PageResult.<GuestRoomDTO>builder().data(guestRoomDTOS).code(0).count(page.getTotal()).build();
   }
 
+  @Override
+  public List<GuestRoomDTO> listUnBindDeviceRoom(String shopId) {
+    return guestRoomMapper.listUnBindDeviceRoom(shopId);
+  }
 }

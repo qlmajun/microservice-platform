@@ -18,13 +18,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">房间类型</label>
         <div class="layui-input-block">
-            <select name="roomTypeId" xm-select="roomTypeId">
+            <select name="roomTypeId" id="roomTypeId" lay-verify="required">
             </select>
         </div>
     </div>
     <div class="layui-form-item model-form-footer">
         <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
-        <button class="layui-btn" lay-filter="user-form-submit" lay-submit>保存</button>
+        <button class="layui-btn" lay-filter="guest-room-form-submit" lay-submit>保存</button>
     </div>
 </form>
 
@@ -40,16 +40,16 @@
         admin.req('api-home-stay/shop/room/types', {}, function (data) {
             layer.closeAll('loading');
             if (0 == data.resp_code) {
-                // 渲染多选下拉框
-                var roomTypeData = new Array();
+                // 渲染下拉框
+                $("#roomTypeId").append("<option value=\"\">-请选择房间类型-</option>");
                 for (var i = 0; i < data.datas.length; i++) {
-                    roomTypeData.push({name: data.datas[i].name, value: data.datas[i].id});
+                    $("#roomTypeId").append("<option value=\""+data.datas[i].id+"\">"+data.datas[i].name+"</option>");
                 }
-                formSelects.data('roomTypeId', 'local', {arr: roomTypeData});
+                //重新渲染
+                layui.form.render("select");
 
-                // 回显user数据
+                // 回显客房数据
                 var guestRoom = admin.getTempData('t_guest_room');
-                console.log(user);
                 $('#guest-room-form').attr('method', 'POST');
                 if (guestRoom) {
                     form.val('guest-room-form', guestRoom);

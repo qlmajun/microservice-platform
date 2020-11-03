@@ -1,9 +1,8 @@
 package com.warrior.central.home.stay.mapper.shop;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.warrior.central.common.model.SysUser;
 import com.warrior.central.db.mapper.SuperMapper;
-import com.warrior.central.home.stay.model.ShopDO;
+import com.warrior.central.home.stay.model.shop.ShopDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

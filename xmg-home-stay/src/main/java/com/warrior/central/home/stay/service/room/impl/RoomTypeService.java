@@ -5,7 +5,7 @@ import com.warrior.central.common.model.Result;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
 import com.warrior.central.home.stay.controller.room.dto.RoomTypeDTO;
 import com.warrior.central.home.stay.mapper.room.RoomTypeMapper;
-import com.warrior.central.home.stay.model.RoomTypeDO;
+import com.warrior.central.home.stay.model.room.RoomTypeDO;
 import com.warrior.central.home.stay.service.room.IRoomTypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

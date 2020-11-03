@@ -53,6 +53,11 @@ public class GuestRoomDTO implements Serializable {
   private Integer occupancyStatus = 0;
 
   /**
+   * 绑定设备编号
+   */
+  private String deviceNumber;
+
+  /**
    * 创建时间
    */
   private Date createTime;

@@ -5,6 +5,7 @@ import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
 import com.warrior.central.home.stay.controller.room.dto.GuestRoomDTO;
 import com.warrior.central.home.stay.service.room.IGuestRoomService;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +48,17 @@ public class GuestRoomController {
     guestRoomDTO.setShopId(shopId);
     return guestRoomService.saveOrUpdate(guestRoomDTO);
   }
+
+  /**
+   * 获取门店未绑定设备的客房列表
+   * @param request
+   * @return
+   */
+  @GetMapping("unbind/device/guest/rooms")
+  public Result<List<GuestRoomDTO>> listUnBindDeviceRoom(HttpServletRequest request){
+    String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+    List<GuestRoomDTO> guestRoomDTOS = guestRoomService.listUnBindDeviceRoom(shopId);
+    return Result.succeed(guestRoomDTOS);
+  }
+
 }

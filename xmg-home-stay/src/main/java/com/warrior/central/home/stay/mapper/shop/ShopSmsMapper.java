@@ -1,7 +1,7 @@
 package com.warrior.central.home.stay.mapper.shop;
 
 import com.warrior.central.db.mapper.SuperMapper;
-import com.warrior.central.home.stay.model.ShopSmsDO;
+import com.warrior.central.home.stay.model.shop.ShopSmsDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
