@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrior.central.home.stay.mapper.room.RoomDeviceBindMapper">
+
+	<delete id="deleteRoomDeviceBind">
+		 DELETE FROM zmsk_room_device_bind WHERE shop_id = #{shopId} AND room_id = #{roomId} AND device_id = #{deviceId}
+	</delete>
+
+</mapper>

@@ -1,5 +1,6 @@
 package com.warrior.central.home.stay.service.device.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
@@ -66,5 +67,10 @@ public class DeviceService extends SuperServiceImpl<DeviceMapper, DeviceDO> impl
     @Override
     public List<DeviceDTO> listUnBindRoomDevices(String shopId) {
         return deviceMapper.listUnBindRoomDevices(shopId);
+    }
+
+    @Override
+    public DeviceDO getDeviceByNumber(String deviceNumber) {
+        return deviceMapper.selectOne(new QueryWrapper<DeviceDO>().eq("number",deviceNumber));
     }
 }

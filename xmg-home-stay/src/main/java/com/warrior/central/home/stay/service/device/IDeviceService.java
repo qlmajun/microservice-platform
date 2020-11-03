@@ -49,4 +49,11 @@ public interface IDeviceService extends ISuperService<DeviceDO> {
      * @return
      */
     List<DeviceDTO>  listUnBindRoomDevices(String shopId);
+
+    /**
+     * 根据设备编号获取设备信息
+     * @param deviceNumber 设备编号
+     * @return
+     */
+    DeviceDO getDeviceByNumber(String deviceNumber);
 }
