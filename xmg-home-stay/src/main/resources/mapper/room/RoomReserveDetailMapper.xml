@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrior.central.home.stay.mapper.room.RoomReserveDetailMapper">
+
+	<select id="listReserveTenants" resultType="com.warrior.central.home.stay.controller.room.dto.ReserveTenantDTO">
+   	SELECT
+			id,
+			reserve_id AS reserveId,
+			name,
+			sex,
+			face_address AS faceAddress,
+			phone_number AS phoneNumber,
+			id_number AS idNumber,
+			id_avatar AS idAvatar,
+			id_address AS idAddress,
+			create_time AS createTime
+		FROM
+			zmsk_room_reserve_detail
+		WHERE
+		  reserve_id = #{reserveId}
+		ORDER BY create_time ASC
+	</select>
+
+</mapper>

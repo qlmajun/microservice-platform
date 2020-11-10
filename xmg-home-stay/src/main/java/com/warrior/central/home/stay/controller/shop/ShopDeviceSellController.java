@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2020/11/3
  */
 @RestController
-public class ShopDeviceOrderController {
+public class ShopDeviceSellController {
 
   @Autowired
   private IShopDeviceOrderService shopDeviceOrderService;

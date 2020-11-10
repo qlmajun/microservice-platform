@@ -7,6 +7,7 @@ import com.warrior.central.home.stay.controller.room.dto.GuestRoomDTO;
 import com.warrior.central.home.stay.model.room.GuestRoomDO;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author mj
@@ -35,4 +36,11 @@ public interface IGuestRoomService extends ISuperService<GuestRoomDO> {
    * @return
    */
   List<GuestRoomDTO> listUnBindDeviceRoom(String shopId);
+
+  /**
+   * 退房
+   * @param roomId
+   * @return
+   */
+  boolean checkOutRoom(String roomId);
 }

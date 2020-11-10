@@ -60,5 +60,4 @@ public class GuestRoomController {
     List<GuestRoomDTO> guestRoomDTOS = guestRoomService.listUnBindDeviceRoom(shopId);
     return Result.succeed(guestRoomDTOS);
   }
-
 }

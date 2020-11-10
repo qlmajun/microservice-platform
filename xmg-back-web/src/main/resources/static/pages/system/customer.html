@@ -16,6 +16,7 @@
             </select>&emsp;
             <input id="customer-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
             <button id="customer-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="customer-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>开通客户</button>
         </div>
 
         <!-- 数据表格 -->
@@ -66,6 +67,24 @@
             var value = $('#customer-search-value').val();
             table.reload('customer-table', {where: {searchKey: key, searchValue: value}});
         });
+
+        // 添加按钮点击事件
+        $('#customer-btn-add').click(function () {
+            showEditModel();
+        });
+
+        //显示表单弹窗
+        var showEditModel = function (data) {
+            admin.putTempData('t_customer', data);
+            var title = data ? '修改客户' : '开通客户';
+            admin.popupCenter({
+                title: title,
+                path: 'pages/system/customer_form.html',
+                finish: function () {
+                    table.reload('customer-table', {});
+                }
+            });
+        };
 
         // 修改user状态
         form.on('switch(customer-tpl-state)', function (obj) {

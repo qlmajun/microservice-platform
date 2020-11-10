@@ -39,4 +39,9 @@ public class RoomReserveDO extends SuperEntity {
      * 退房时间
      */
     private LocalDate checkOutDate;
+
+    /**
+     * 0：退房，1：正常
+     */
+    private Integer status = 1;
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrior.central.home.stay.mapper.room.RoomReserveMapper">
+
+	<select id="listReserveRoom" resultType="com.warrior.central.home.stay.controller.room.dto.RoomReserveDTO">
+   	SELECT
+			reserve.id AS id,
+			reserve.shop_id AS shopId,
+			reserve.room_id AS roomId,
+			room.room_number AS roomNumber,
+			type.name AS typeName,
+			reserve.check_in_date AS checkInDate,
+			reserve.check_out_date AS checkOutDate,
+		  reserve.status AS status,
+			reserve.create_time AS createTime
+		FROM
+			zmsk_room_reserve reserve
+		LEFT JOIN zmsk_guest_room room ON room.id = reserve.room_id
+		LEFT JOIN zmsk_room_type type ON type.id = room.room_type_id
+		WHERE
+	   	reserve.shop_id = #{shopId}
+		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='roomNumber'">
+			AND room.room_number = #{u.searchValue}
+		</if>
+		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='checkInDate'">
+			AND reserve.check_in_date = #{u.searchValue}
+		</if>
+		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='checkOutDate'">
+			AND reserve.check_out_date = #{u.searchValue}
+		</if>
+		ORDER BY reserve.create_time DESC
+	</select>
+
+</mapper>
