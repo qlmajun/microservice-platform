@@ -10,6 +10,7 @@ import com.warrior.central.home.stay.mapper.device.DeviceMapper;
 import com.warrior.central.home.stay.model.device.DeviceDO;
 import com.warrior.central.home.stay.service.device.IDeviceService;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -72,5 +73,19 @@ public class DeviceService extends SuperServiceImpl<DeviceMapper, DeviceDO> impl
     @Override
     public DeviceDO getDeviceByNumber(String deviceNumber) {
         return deviceMapper.selectOne(new QueryWrapper<DeviceDO>().eq("number",deviceNumber));
+    }
+
+    @Override
+    public PageResult<DeviceDTO> listShopDevices(Map<String, Object> params,String shopId) {
+        Page<DeviceDO> page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));
+        List<DeviceDTO> deviceDTOS = deviceMapper.listShopDevices(shopId);
+        deviceDTOS.stream().forEach(deviceDTO -> {
+            if(StringUtils.isNotEmpty(deviceDTO.getRoomId())){
+                deviceDTO.setEnableStatus(false);
+            }else {
+                deviceDTO.setEnableStatus(true);
+            }
+        });
+        return PageResult.<DeviceDTO>builder().data(deviceDTOS).code(0).count(page.getTotal()).build();
     }
 }

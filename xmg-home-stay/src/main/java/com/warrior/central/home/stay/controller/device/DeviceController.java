@@ -82,4 +82,21 @@ public class DeviceController {
         List<DeviceDTO> deviceDTOS = deviceService.listUnBindRoomDevices(shopId);
         return Result.succeed(deviceDTOS);
     }
+
+    /**
+     * 获取门店设备列表
+     * @param params
+     * @param request
+     * @return
+     */
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "分页起始位置", required = true, dataType = "Integer"),
+        @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer")
+    })
+    @GetMapping("shop/devices")
+    public PageResult<DeviceDTO> listShopDevices(@RequestParam Map<String, Object> params,HttpServletRequest request){
+        String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+        return deviceService.listShopDevices(params,shopId);
+    }
+
 }

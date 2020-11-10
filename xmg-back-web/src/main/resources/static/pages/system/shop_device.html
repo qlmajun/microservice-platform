@@ -1,0 +1,54 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">门店设备列表</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>门店设备列表</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <!-- 数据表格 -->
+        <table class="layui-table" id="shop-device-table" lay-filter="shop-device-table"></table>
+    </div>
+</div>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="shop-device-tpl-state">
+    <input type="checkbox" lay-filter="shop-device-tpl-state" value="{{d.id}}" readonly="readonly"  lay-skin="switch" lay-text="未绑定|已绑定"
+           {{d.enableStatus==true?'checked':''}} disabled/>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        //渲染表格
+        table.render({
+            elem: '#shop-device-table',
+            url: config.base_server + 'api-home-stay/shop/devices',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {field: 'id', sort: true, title: 'ID'},
+                {field: 'number', sort: true, title: '设备号'},
+                {field: 'ip', sort: true, title: 'IP'},
+                {field: 'apkVersion', sort: true, title: 'apk版本'},
+                {field: 'macId', sort: true, title: 'MAC ID'},
+                {field: 'cupId', sort: true, title: 'CPU ID'},
+                {field: 'enableStatus', sort: true, templet: '#shop-device-tpl-state', title: '绑定状态'},
+                {field: 'roomNumber', sort: true, title: '房号'},
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                }
+            ]]
+        });
+    });
+
+</script>

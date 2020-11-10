@@ -56,4 +56,12 @@ public interface IDeviceService extends ISuperService<DeviceDO> {
      * @return
      */
     DeviceDO getDeviceByNumber(String deviceNumber);
+
+    /**
+     * 获取门店设备列表
+     * @param params 分页信息
+     * @param shopId 门店Id
+     * @return
+     */
+    PageResult<DeviceDTO> listShopDevices(Map<String, Object> params,String shopId);
 }

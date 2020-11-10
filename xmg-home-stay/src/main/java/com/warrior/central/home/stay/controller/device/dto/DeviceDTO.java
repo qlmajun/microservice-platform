@@ -72,13 +72,22 @@ public class DeviceDTO implements Serializable {
     private LocalDate deadline;
 
     /**
-     * 设备可用状态，0：不可用，1：可用
+     * 设备可用状态，
      */
-    private Integer enableStatus = 1;
-
+    private Boolean enableStatus;
 
     /**
      * 创建时间
      */
     private Date createTime;
+
+    /**
+     * 绑定房间Id
+     */
+    private String roomId;
+
+    /**
+     * 绑定房间号
+     */
+    private String roomNumber;
 }

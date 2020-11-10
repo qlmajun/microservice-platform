@@ -37,5 +37,12 @@ public interface DeviceMapper extends SuperMapper<DeviceDO> {
      * @param shopId 门店Id
      * @return
      */
-    List<DeviceDTO>  listUnBindRoomDevices(@Param("shopId") String shopId);
+    List<DeviceDTO> listUnBindRoomDevices(@Param("shopId") String shopId);
+
+    /**
+     * 获取门店设备列表
+     * @param shopId 门店Id
+     * @return
+     */
+    List<DeviceDTO> listShopDevices(@Param("shopId") String shopId);
 }
