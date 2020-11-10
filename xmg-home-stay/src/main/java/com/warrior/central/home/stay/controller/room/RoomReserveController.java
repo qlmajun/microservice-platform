@@ -52,9 +52,9 @@ public class RoomReserveController {
    * @return
    */
   @GetMapping("reserved/rooms")
-  public PageResult<RoomReserveDTO> listReserveRoom(@RequestParam Map<String, Object> params,HttpServletRequest request){
+  public PageResult<RoomReserveDTO> listReservedRoom(@RequestParam Map<String, Object> params,HttpServletRequest request){
     String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
-    return roomReserveService.listReserveRoom(shopId,params);
+    return roomReserveService.listReservedRoom(shopId,params);
   }
 
   /**

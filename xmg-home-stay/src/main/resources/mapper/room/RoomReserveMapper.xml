@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.warrior.central.home.stay.mapper.room.RoomReserveMapper">
 
-	<select id="listReserveRoom" resultType="com.warrior.central.home.stay.controller.room.dto.RoomReserveDTO">
+	<select id="listReservedRoom" resultType="com.warrior.central.home.stay.controller.room.dto.RoomReserveDTO">
    	SELECT
 			reserve.id AS id,
 			reserve.shop_id AS shopId,
@@ -20,6 +20,8 @@
 		LEFT JOIN zmsk_room_type type ON type.id = room.room_type_id
 		WHERE
 	   	reserve.shop_id = #{shopId}
+	  AND
+		  reserve.status = 1
 		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='roomNumber'">
 			AND room.room_number = #{u.searchValue}
 		</if>

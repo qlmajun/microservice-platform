@@ -31,6 +31,14 @@ public interface IGuestRoomService extends ISuperService<GuestRoomDO> {
   PageResult<GuestRoomDTO> listGuestRoom(Map<String, Object> params,String shopId);
 
   /**
+   * 获取门店可预定房间列表
+   * @param params
+   * @param shopId
+   * @return
+   */
+  PageResult<GuestRoomDTO> listReserveRoom(Map<String, Object> params,String shopId);
+
+  /**
    *获取门店未绑定设备的客房列表
    * @param shopId 门店Id
    * @return

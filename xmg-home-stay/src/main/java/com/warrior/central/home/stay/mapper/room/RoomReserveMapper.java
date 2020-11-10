@@ -14,5 +14,11 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface RoomReserveMapper extends SuperMapper<RoomReserveDO> {
 
-  List<RoomReserveDTO> listReserveRoom(@Param("shopId") String shopId, @Param("u") Map<String, Object> params);
+  /**
+   * 获取已预定列表
+   * @param shopId
+   * @param params
+   * @return
+   */
+  List<RoomReserveDTO> listReservedRoom(@Param("shopId") String shopId, @Param("u") Map<String, Object> params);
 }

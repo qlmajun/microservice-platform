@@ -15,6 +15,8 @@ import org.apache.ibatis.annotations.Param;
 public interface GuestRoomMapper extends SuperMapper<GuestRoomDO> {
 
   List<GuestRoomDTO> listGuestRoom(@Param("u") Map<String, Object> params, @Param("shopId") String shopId);
+  
+  List<GuestRoomDTO> listReserveRoom(@Param("u") Map<String, Object> params, @Param("shopId") String shopId);
 
   /**
    *获取门店未绑定设备的客房列表

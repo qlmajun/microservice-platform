@@ -38,6 +38,17 @@ public class GuestRoomController {
   }
 
   /**
+   * 获取门店可预定房间列表
+   * @param request
+   * @return
+   */
+  @GetMapping("/reserve/guest/rooms")
+  public PageResult<GuestRoomDTO> listReserveRoom(@RequestParam Map<String, Object> params,HttpServletRequest request){
+    String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+    return guestRoomService.listReserveRoom(params,shopId);
+  }
+
+  /**
    * 新增OR修改门店房间
    * @param guestRoomDTO
    * @return

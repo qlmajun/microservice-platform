@@ -26,7 +26,7 @@ public interface IRoomReserveService extends ISuperService<RoomReserveDO> {
    * @param params
    * @return
    */
-  PageResult<RoomReserveDTO> listReserveRoom(String shopId, Map<String, Object> params);
+  PageResult<RoomReserveDTO> listReservedRoom(String shopId, Map<String, Object> params);
 
 
   /**

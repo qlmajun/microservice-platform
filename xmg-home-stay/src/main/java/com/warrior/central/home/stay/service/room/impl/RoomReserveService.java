@@ -53,9 +53,9 @@ public class RoomReserveService extends SuperServiceImpl<RoomReserveMapper, Room
   }
 
   @Override
-  public PageResult<RoomReserveDTO> listReserveRoom(String shopId, Map<String, Object> params) {
+  public PageResult<RoomReserveDTO> listReservedRoom(String shopId, Map<String, Object> params) {
     Page<RoomReserveDTO> page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));
-    List<RoomReserveDTO> roomReserveDTOS = roomReserveMapper.listReserveRoom(shopId,params);
+    List<RoomReserveDTO> roomReserveDTOS = roomReserveMapper.listReservedRoom(shopId,params);
     return PageResult.<RoomReserveDTO>builder().data(roomReserveDTOS).code(0).count(page.getTotal()).build();
   }
 

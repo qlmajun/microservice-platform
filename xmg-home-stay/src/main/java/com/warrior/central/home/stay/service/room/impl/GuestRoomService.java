@@ -42,6 +42,13 @@ public class GuestRoomService extends SuperServiceImpl<GuestRoomMapper, GuestRoo
   }
 
   @Override
+  public PageResult<GuestRoomDTO> listReserveRoom(Map<String, Object> params,String shopId) {
+    Page<GuestRoomDTO> page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));
+    List<GuestRoomDTO> guestRoomDTOS = guestRoomMapper.listReserveRoom(params,shopId);
+    return PageResult.<GuestRoomDTO>builder().data(guestRoomDTOS).code(0).count(page.getTotal()).build();
+  }
+
+  @Override
   public List<GuestRoomDTO> listUnBindDeviceRoom(String shopId) {
     return guestRoomMapper.listUnBindDeviceRoom(shopId);
   }
