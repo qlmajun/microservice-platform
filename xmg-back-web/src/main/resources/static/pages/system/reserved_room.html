@@ -1,0 +1,75 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">已定列表</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>已定列表</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <table class="layui-table" id="reserved-room-table" lay-filter="reserved-room-table"></table>
+    </div>
+</div>
+
+
+<!-- 表格操作列 -->
+<script type="text/html" id="reserved-room-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="checkOut">退房</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="getTenant">查看房客</a>
+</script>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="reserved-room-tpl-state">
+    <input type="checkbox" lay-filter="reserved-room-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="正常|退房"
+           {{d.status==true?'checked':''}}/>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        // 渲染表格
+        table.render({
+            elem: '#reserved-room-table',
+            url: config.base_server + 'api-home-stay/reserved/rooms',
+            method: 'GET',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {field: 'id', sort: true, title: 'ID'},
+                {field: 'roomNumber', sort: true, title: '房号'},
+                {field: 'typeName', sort: true, title: '房间类型'},
+                {field: 'checkInDate', sort: true, title: '入住日期'},
+                {field: 'checkOutDate', sort: true, title: '退房日期'},
+                {field: 'status', sort: true, templet: '#reserved-room-tpl-state', title: '状态'},
+                {
+                    sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {fixed: 'right', align: 'center', toolbar: '#reserved-room-table-bar', title: '操作'}
+            ]]
+        });
+
+        // 工具条点击事件
+        table.on('tool(reserved-room-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if (layEvent === 'reserve') { // 预定
+            }
+        });
+
+        //判断权限，没有权限则隐藏按钮
+        /*let resList = ['user-btn-add','user-btn-export','user-btn-import'];
+        for(let i = 0; i < resList.length; i++){
+            if (!admin.hasPerm(resList[i])) {
+                $('#'+resList[i]).hide();
+            }
+        }*/
+    });
+</script>
