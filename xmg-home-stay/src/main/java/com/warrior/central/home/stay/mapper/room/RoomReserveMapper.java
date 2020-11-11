@@ -3,6 +3,7 @@ package com.warrior.central.home.stay.mapper.room;
 import com.warrior.central.db.mapper.SuperMapper;
 import com.warrior.central.home.stay.controller.room.dto.RoomReserveDTO;
 import com.warrior.central.home.stay.model.room.RoomReserveDO;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,8 @@ public interface RoomReserveMapper extends SuperMapper<RoomReserveDO> {
    * @return
    */
   List<RoomReserveDTO> listReservedRoom(@Param("shopId") String shopId, @Param("u") Map<String, Object> params);
+
+  List<String> listUnCheckOutRoomId(@Param("date")LocalDate date);
+
+  int checkOutRoom(@Param("roomIds") List<String> roomIds);
 }

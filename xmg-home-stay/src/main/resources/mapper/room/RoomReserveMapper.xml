@@ -22,16 +22,28 @@
 	   	reserve.shop_id = #{shopId}
 	  AND
 		  reserve.status = 1
-		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='roomNumber'">
-			AND room.room_number = #{u.searchValue}
-		</if>
-		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='checkInDate'">
-			AND reserve.check_in_date = #{u.searchValue}
-		</if>
-		<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='checkOutDate'">
-			AND reserve.check_out_date = #{u.searchValue}
+		<if test="u.roomNumber != null and u.roomNumber != ''">
+			AND room.room_number = #{u.roomNumber}
 		</if>
 		ORDER BY reserve.create_time DESC
 	</select>
+
+	<select id="listUnCheckOutRoomId" resultType="java.lang.String">
+		SELECT
+		  room_id
+		FROM
+		  zmsk_room_reserve
+		WHERE
+		  check_out_date <![CDATA[ <= ]]> #{date}
+		AND
+		  status = 1
+	</select>
+
+	<update id="checkOutRoom">
+		UPDATE zmsk_room_reserve SET status = 0 WHERE room_id IN
+		<foreach collection="roomIds" item="roomId" open="(" separator="," close=")">
+			#{roomId}
+		</foreach>
+	</update>
 
 </mapper>

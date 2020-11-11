@@ -61,4 +61,11 @@
 			room.id NOT IN ( SELECT room_id FROM zmsk_room_device_bind WHERE shop_id = #{shopId})
 	</select>
 
+	<update id="updateRoomUnoccupied">
+		UPDATE zmsk_guest_room SET occupancy_status = 0 WHERE id IN
+		<foreach collection="roomIds" item="roomId" open="(" separator="," close=")">
+			 #{roomId}
+		</foreach>
+	</update>
+
 </mapper>

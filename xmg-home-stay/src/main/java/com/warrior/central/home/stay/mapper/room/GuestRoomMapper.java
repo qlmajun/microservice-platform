@@ -24,4 +24,6 @@ public interface GuestRoomMapper extends SuperMapper<GuestRoomDO> {
    * @return
    */
   List<GuestRoomDTO> listUnBindDeviceRoom(@Param("shopId") String shopId);
+
+  int updateRoomUnoccupied(@Param("roomIds") List<String> roomIds);
 }

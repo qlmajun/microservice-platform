@@ -7,6 +7,11 @@
         </span>
     </div>
     <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            房号：
+            <input id="room-number-value" class="layui-input search-input" type="text" placeholder="输入房号"/>
+            <button id="reserved-room-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
         <table class="layui-table" id="reserved-room-table" lay-filter="reserved-room-table"></table>
     </div>
 </div>
@@ -54,6 +59,12 @@
                 },
                 {fixed: 'right', align: 'center', toolbar: '#reserved-room-table-bar', title: '操作'}
             ]]
+        });
+
+        // 搜索按钮点击事件
+        $('#reserved-room-btn-search').click(function () {
+            var roomNumber = $('#room-number-value').val();
+            table.reload('reserved-room-table', {where: {roomNumber:roomNumber}});
         });
 
         // 工具条点击事件
