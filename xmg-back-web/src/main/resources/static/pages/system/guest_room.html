@@ -8,15 +8,11 @@
     </div>
     <div class="layui-card-body">
         <div class="layui-form toolbar">
-            搜索：
-            <select id="guest-room-search-key">
-                <option value="">-请选择-</option>
-                <option value="user_id">ID</option>
-                <option value="username">账号</option>
-                <option value="nick_name">用户名</option>
-                <option value="mobile">手机号</option>
-            </select>&emsp;
-            <input id="guest-room-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            房号：
+            <input id="room-number-search-value" class="layui-input search-input" type="text" placeholder="输入房号"/>
+            房间类型：
+            <select id="guest-room-type-search-key">
+            </select>
             <button id="guest-room-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
             <button id="guest-room-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
         </div>
@@ -71,9 +67,32 @@
             ]]
         });
 
+        //获取门店房间类型
+        layer.load(2);
+        admin.req('api-home-stay/shop/room/types', {}, function (data) {
+            $("#guest-room-type-search-key").append("<option value=\"\">-请选择房间类型-</option>");
+            layer.closeAll('loading');
+            if (0 == data.resp_code) {
+                for (var i = 0; i < data.datas.length; i++) {
+                    $("#guest-room-type-search-key").append("<option value=\""+data.datas[i].id+"\">"+data.datas[i].name+"</option>");
+                }
+                //重新渲染
+                layui.form.render("select");
+            } else {
+                layer.msg('获取门店房间类型数据失败', {icon: 2, time: 500});
+            }
+        }, 'GET');
+
         // 添加按钮点击事件
         $('#guest-room-btn-add').click(function () {
             showEditModel();
+        });
+
+        // 搜索按钮点击事件
+        $('#guest-room-btn-search').click(function () {
+            var roomNumber = $('#room-number-search-value').val();
+            var roomTypeId = $('#guest-room-type-search-key').val();
+            table.reload('guest-room-table', {where: {roomNumber:roomNumber,roomTypeId: roomTypeId}});
         });
 
         // 工具条点击事件

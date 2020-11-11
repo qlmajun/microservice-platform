@@ -20,6 +20,12 @@
 	  LEFT JOIN zmsk_device device ON device.id = deviceBind.device_id
 		WHERE
 		  room.shop_id = #{shopId}
+		<if test="u.roomNumber != null and u.roomNumber != ''">
+			and room.room_number  like concat('%', #{u.roomNumber}, '%')
+		</if>
+		<if test="u.roomTypeId != null and u.roomTypeId != ''">
+			AND room.room_type_id = #{u.roomTypeId}
+		</if>
 		ORDER BY room.create_time DESC
 	</select>
 
