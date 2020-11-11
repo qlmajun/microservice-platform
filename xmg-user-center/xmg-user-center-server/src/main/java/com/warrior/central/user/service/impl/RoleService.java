@@ -46,8 +46,8 @@ public class RoleService extends SuperServiceImpl<RoleMapper, SysRoleDO> impleme
     private DistributedLock lock;
 
     @Override
-    public List<SysRole> findAll() {
-        return roleMapper.findAll();
+    public List<SysRole> findAll(String shopId) {
+        return roleMapper.findAll(shopId);
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.warrior.central.user.controller;
 
+import com.warrior.central.common.constant.SecurityConstants;
 import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
 import com.warrior.central.common.model.SysRole;
 import com.warrior.central.user.service.IRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +36,10 @@ public class RoleController {
      */
     @ApiOperation(value = "后台管理查询角色")
     @GetMapping("/allRoles")
-    public Result<List<SysRole>> findAll() {
-        List<SysRole> result = roleService.findAll();
+    public Result<List<SysRole>> findAll(HttpServletRequest request) {
+        //获取门店Id
+        String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
+        List<SysRole> result = roleService.findAll(shopId);
         return Result.succeed(result);
     }
 

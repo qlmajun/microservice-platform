@@ -13,7 +13,7 @@ import java.util.Map;
 @Mapper
 public interface RoleMapper extends SuperMapper<SysRoleDO> {
 
-    List<SysRole> findAll();
+    List<SysRole> findAll(@Param("shopId") String shopId);
 
     List<SysRole> findList(Page<SysRole> page, @Param("r") Map<String, Object> params);
 }

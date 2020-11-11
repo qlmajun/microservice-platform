@@ -16,10 +16,10 @@ public interface IRoleService extends ISuperService<SysRoleDO> {
 
     /**
      * 查询所有角色
-     *
+     * @param shopId
      * @return
      */
-    List<SysRole> findAll();
+    List<SysRole> findAll(String shopId);
 
     /**
      * 角色列表
