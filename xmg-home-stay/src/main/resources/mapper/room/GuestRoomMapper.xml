@@ -39,6 +39,9 @@
 		  room.shop_id = #{shopId}
 		AND
 		  room.occupancy_status = 0
+		<if test="u.roomTypeId != null and u.roomTypeId != ''">
+			AND room.room_type_id = #{u.roomTypeId}
+		</if>
 		ORDER BY room.create_time ASC
 	</select>
 

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
 import com.warrior.central.common.service.impl.SuperServiceImpl;
-import com.warrior.central.home.constant.OccupancyConstant;
+import com.warrior.central.home.stay.constant.OccupancyConstant;
 import com.warrior.central.home.stay.controller.room.dto.GuestRoomDTO;
 import com.warrior.central.home.stay.mapper.room.GuestRoomMapper;
 import com.warrior.central.home.stay.model.room.GuestRoomDO;

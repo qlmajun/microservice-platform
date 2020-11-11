@@ -1,4 +1,4 @@
-package com.warrior.central.home.constant;
+package com.warrior.central.home.stay.constant;
 
 /**
  *
