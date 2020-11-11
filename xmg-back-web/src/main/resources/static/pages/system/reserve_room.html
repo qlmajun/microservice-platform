@@ -99,6 +99,7 @@
                 title: title,
                 path: 'pages/system/reserve_room_form.html',
                 finish: function () {
+                    table.reload('reserve-room-table', {});
                     index.openNewTab({
                         title: '房客信息采集',
                         url: 'pages/system/reserve_room_tenant_add.html',
