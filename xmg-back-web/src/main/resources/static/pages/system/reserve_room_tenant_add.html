@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="/assets/libs/zTree/css/zTreeStyle/zTreeStyle.css"/>
+<script type="text/javascript" src="/assets/libs/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">房客信息</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>房客信息</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            <button id="tenant-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加房客</button>
+        </div>
+        <!-- 数据表格 -->
+        <table class="layui-table" id="room-reserve-table" lay-filter="room-reserve-table"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        var reserveId = admin.getTempData('t_room_reserve_id');
+
+        //渲染表格
+        table.render({
+            elem: '#room-reserve-table',
+            url: config.base_server + 'api-home-stay/ordered/room?reserveId='+reserveId,
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: false,
+            cols: [[
+                {field: 'id', sort: true, title: 'ID'},
+                {field: 'roomNumber', sort: true, title: '房号'},
+                {field: 'typeName', sort: true, title: '房间类型'},
+                {field: 'checkInDate', sort: true, title: '入住日期'},
+                {field: 'checkOutDate', sort: true, title: '退房日期'},
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                }
+            ]]
+        });
+
+        // 添加按钮点击事件
+        $('#role-btn-add').click(function () {
+            showEditModel();
+        });
+
+    });
+
+</script>

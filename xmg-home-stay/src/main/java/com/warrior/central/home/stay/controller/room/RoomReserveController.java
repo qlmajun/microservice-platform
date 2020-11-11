@@ -3,10 +3,12 @@ package com.warrior.central.home.stay.controller.room;
 import com.warrior.central.common.constant.SecurityConstants;
 import com.warrior.central.common.model.PageResult;
 import com.warrior.central.common.model.Result;
+import com.warrior.central.common.model.SysMenu;
 import com.warrior.central.home.stay.controller.room.dto.ReserveTenantDTO;
 import com.warrior.central.home.stay.controller.room.dto.RoomReserveDTO;
 import com.warrior.central.home.stay.service.room.IRoomReserveDetailService;
 import com.warrior.central.home.stay.service.room.IRoomReserveService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +44,7 @@ public class RoomReserveController {
     String shopId = request.getHeader(SecurityConstants.USER_SHOP_ID_HEADER);
     roomReserveDTO.setShopId(shopId);
     String id = roomReserveService.reserveRoom(roomReserveDTO);
-    return Result.succeed(id);
+    return Result.succeed(id,"预定成功");
   }
 
   /**
@@ -93,5 +95,18 @@ public class RoomReserveController {
       return Result.failed("操作失败");
     }
     return Result.succeed("操作成功");
+  }
+
+  /**
+   * 根据订单Id获取预定房间信息
+   * @param reserveId 订单Id
+   * @return
+   */
+  @GetMapping("ordered/room")
+  public PageResult<RoomReserveDTO> getReserveRoom(@RequestParam String reserveId){
+    RoomReserveDTO roomReserveDTO = roomReserveService.getReserveRoom(reserveId);
+    List<RoomReserveDTO> list = new ArrayList<>(1);
+    list.add(roomReserveDTO);
+    return PageResult.<RoomReserveDTO>builder().data(list).code(0).count(1L).build();
   }
 }

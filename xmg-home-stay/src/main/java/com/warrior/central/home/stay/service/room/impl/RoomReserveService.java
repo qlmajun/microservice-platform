@@ -66,4 +66,9 @@ public class RoomReserveService extends SuperServiceImpl<RoomReserveMapper, Room
     roomReserveMapper.updateById(roomReserveDO);
     return guestRoomService.checkOutRoom(roomReserveDO.getRoomId());
   }
+
+  @Override
+  public RoomReserveDTO getReserveRoom(String reserveId) {
+    return roomReserveMapper.selectReserveRoom(reserveId);
+  }
 }

@@ -26,4 +26,12 @@ public interface RoomReserveMapper extends SuperMapper<RoomReserveDO> {
   List<String> listUnCheckOutRoomId(@Param("date")LocalDate date);
 
   int checkOutRoom(@Param("roomIds") List<String> roomIds);
+
+
+  /**
+   * 根据订单Id获取预定房间信息
+   * @param reserveId 订单Id
+   * @return
+   */
+  RoomReserveDTO selectReserveRoom(@Param("reserveId") String reserveId);
 }

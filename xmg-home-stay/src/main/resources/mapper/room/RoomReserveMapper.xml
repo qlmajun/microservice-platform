@@ -46,4 +46,19 @@
 		</foreach>
 	</update>
 
+	<select id="selectReserveRoom" resultType="com.warrior.central.home.stay.controller.room.dto.RoomReserveDTO">
+		SELECT
+			reserve.id AS id,
+			reserve.room_id AS shopId,
+			room.room_number AS roomNumber,
+			type.`name` AS typeName,
+			reserve.check_in_date AS checkInDate,
+			reserve.check_out_date AS checkOutDate
+		FROM
+			zmsk_room_reserve reserve
+		LEFT JOIN zmsk_guest_room room ON room.id = reserve.room_id
+		LEFT JOIN zmsk_room_type type ON type.id = room.room_type_id
+		WHERE reserve.id = #{reserveId}
+	</select>
+
 </mapper>

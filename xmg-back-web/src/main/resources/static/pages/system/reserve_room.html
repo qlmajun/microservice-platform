@@ -30,8 +30,9 @@
 </script>
 
 <script>
-    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
+    layui.use(['index','form', 'table', 'util', 'config', 'admin', 'upload'], function () {
         var form = layui.form;
+        var index = layui.index;
         var table = layui.table;
         var config = layui.config;
         var layer = layui.layer;
@@ -86,15 +87,25 @@
             var data = obj.data;
             var layEvent = obj.event;
             if (layEvent === 'reserve') { // 预定
+                showReserveModel(data);
             }
         });
 
-        //判断权限，没有权限则隐藏按钮
-        /*let resList = ['user-btn-add','user-btn-export','user-btn-import'];
-        for(let i = 0; i < resList.length; i++){
-            if (!admin.hasPerm(resList[i])) {
-                $('#'+resList[i]).hide();
-            }
-        }*/
+        var showReserveModel = function(data){
+            data.roomId = data.id;
+            admin.putTempData('t_reserve_room', data);
+            var title = '客房预定';
+            admin.popupCenter({
+                title: title,
+                path: 'pages/system/reserve_room_form.html',
+                finish: function () {
+                    index.openNewTab({
+                        title: '房客信息采集',
+                        url: 'pages/system/reserve_room_tenant_add.html',
+                        menuId: 'tenant'
+                    });
+                }
+            });
+        }
     });
 </script>

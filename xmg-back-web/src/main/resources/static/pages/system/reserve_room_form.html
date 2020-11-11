@@ -1,0 +1,84 @@
+<!-- 房间预定表单弹窗 -->
+<form id="room-reserve-form" lay-filter="room-reserve-form" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+    <input name="roomId" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">房号</label>
+        <div class="layui-input-block">
+            <input name="roomNumber" type="text" class="layui-input layui-disabled" disabled maxlength="20" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">房间类型</label>
+        <div class="layui-input-block">
+            <input name="roomTypeName" type="text" class="layui-input layui-disabled" disabled maxlength="20"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">价格</label>
+        <div class="layui-input-block">
+            <input name="roomPrice" type="text" class="layui-input layui-disabled" disabled maxlength="20"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">入住日期</label>
+        <div class="layui-input-block">
+            <input name="checkInDate" placeholder="入住日期" type="text" class="layui-input" id="check_in" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">退房日期</label>
+        <div class="layui-input-block">
+            <input name="checkOutDate" placeholder="退房日期" type="text" class="layui-input" id="check_out" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" lay-filter="room-reserve-form-submit" lay-submit>预定</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'admin', 'form','laydate'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#check_in' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#check_out' //指定元素
+        });
+
+
+        // 回显预定房间数据
+        var reserveRoom = admin.getTempData('t_reserve_room');
+        $('#room-reserve-form').attr('method', 'POST');
+        if (reserveRoom) {
+            form.val('room-reserve-form', reserveRoom);
+            $('#room-reserve-form').attr('method', 'POST');
+        }
+
+        // 表单提交事件
+        form.on('submit(room-reserve-form-submit)', function (data) {
+            layer.load(2);
+            admin.req('api-home-stay/reserve/room', JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    var reserveId = data.datas;
+                    admin.putTempData('t_room_reserve_id', reserveId);
+                    admin.finishPopupCenter();
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, "POST");
+            return false;
+        });
+    });
+</script>
