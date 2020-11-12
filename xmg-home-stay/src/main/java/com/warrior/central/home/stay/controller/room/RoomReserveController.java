@@ -79,8 +79,10 @@ public class RoomReserveController {
    * @return
    */
   @GetMapping("reserve/tenants")
-  public List<ReserveTenantDTO> listReserveTenants(@RequestParam String reserveId){
-    return roomReserveDetailService.listReserveTenants(reserveId);
+  public PageResult<ReserveTenantDTO> listReserveTenants(@RequestParam String reserveId){
+    List<ReserveTenantDTO> reserveTenantDTOS = roomReserveDetailService.listReserveTenants(reserveId);
+    long total = reserveTenantDTOS.size();
+    return PageResult.<ReserveTenantDTO>builder().data(reserveTenantDTOS).code(0).count(total).build();
   }
 
   /**

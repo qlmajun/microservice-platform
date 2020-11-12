@@ -14,6 +14,8 @@
         </div>
         <!-- 数据表格 -->
         <table class="layui-table" id="room-reserve-table" lay-filter="room-reserve-table"></table>
+        <hr>
+        <table class="layui-table" id="tenant-table" lay-filter="tenant-table"></table>
     </div>
 </div>
 
@@ -28,7 +30,7 @@
 
         var reserveId = admin.getTempData('t_room_reserve_id');
 
-        //渲染表格
+        //渲染预定房间表格
         table.render({
             elem: '#room-reserve-table',
             url: config.base_server + 'api-home-stay/ordered/room?reserveId='+reserveId,
@@ -48,10 +50,47 @@
             ]]
         });
 
+        //渲染房客表格
+        table.render({
+            elem: '#tenant-table',
+            url: config.base_server + 'api-home-stay/reserve/tenants?reserveId='+reserveId,
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: false,
+            cols: [[
+                {field: 'id', sort: true, title: 'ID'},
+                {field: 'faceAddress', sort: true, title: '人脸'},
+                {field: 'idAvatar', sort: true, title: '身份证头像'},
+                {field: 'name', sort: true, title: '姓名'},
+                {sort: true, title: '性别',templet:function (d) {
+                        return d.sex==0?"男":"女"
+                    }},
+                {field: 'idNumber', sort: true, title: '身份证号'},
+                {field: 'phoneNumber', sort: true, title: '电话'},
+                {field: 'idAddress', sort: true, title: '身份证地址'},
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                }
+            ]]
+        });
+
         // 添加按钮点击事件
-        $('#role-btn-add').click(function () {
+        $('#tenant-btn-add').click(function () {
             showEditModel();
         });
+
+        //显示表单弹窗
+        var showEditModel = function () {
+            var title = '采集房客信息';
+            admin.popupCenter({
+                title: title,
+                path: 'pages/system/tenant_form.html',
+                finish: function () {
+                    table.reload('tenant-table', {});
+                }
+            });
+        };
 
     });
 
